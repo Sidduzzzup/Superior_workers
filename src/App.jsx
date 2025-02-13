@@ -27,11 +27,22 @@ import TodoList from "./assets/components/Routing-Component/TodoList.jsx";
 import AdminDashboard from './assets/components/OwnerComponents/AdminDashboard.jsx';
 import Yourtasks from './assets/components/Routing-Component/Yourtasks.jsx';
 import CEOPortal from './assets/components/OwnerComponents/CEOPortal.jsx';
+import LiveProofSection from './assets/components/LiveProofSection.jsx'
 
 // Protected route for admins only
+// const AdminOnlyRoute = ({ children }) => {
+//   const { isAuthenticated, user } = useAuthStore();
+  
+//   // If not authenticated or not an admin, redirect
+//   if (!isAuthenticated || !user?.isAdmin) {
+//     return <Navigate to="/" replace />;
+//   }
+
+//   return children;
+// };
 const AdminOnlyRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
-  
+
   // If not authenticated or not an admin, redirect
   if (!isAuthenticated || !user?.isAdmin) {
     return <Navigate to="/" replace />;
@@ -39,6 +50,7 @@ const AdminOnlyRoute = ({ children }) => {
 
   return children;
 };
+
 
 
 const ProtectedRoute = ({ children }) => {
@@ -89,18 +101,22 @@ function AppContent() {
 
   return (
     <>
+
+
+
       {/* Show Navbar only if not on AdminDashboard */}
       {/* {location.pathname !== "/AdminDashboard"  ,"/CEOPortal" && <Navbar />} */}
       {location.pathname !== "/AdminDashboard" && location.pathname !== "/CEOPortal" && <Navbar />}
 
       <Routes>
-        <Route path="/" element={
+        {/* <Route path="/" element={
           isAuthenticated && !user?.isAdmin ? (
             <Homepage />
           ) : (
             <Navigate to="/FirstLogin" replace /> // Redirect admins to login page
           )
-        } />
+        } /> */}
+        <Route path='/' element={<Homepage/>} />
 
         {/* Create an Account */}
         <Route
@@ -136,6 +152,7 @@ function AppContent() {
         <Route path="/EmailConfirmationSuccess" element={<EmailConfirmationSuccess />} />
         <Route path="/forgot-password" element={<ResetEmailRequest />} />
         <Route path='/CEOPortal' element={<CEOPortal/>} />
+        <Route path='/LiveProofSection' element={<LiveProofSection/>} />
       
       
         {/* Protected routes */}

@@ -7,7 +7,7 @@ const Works = () => {
     <div className='container'>
         <div>
         <div className='text-sm bg-orange-300 rounded-xl flex justify-center mx-6 sm:mx-16 p-1'>
-            <p className='font-semibold text-xs sm:text-sm'>Book Online Now <span className='text-indigo-600 font-bold'>50% OFF</span> For USA Citizens </p></div>
+            <p className='font-semibold text-xs sm:text-sm'>Book Online Now <span className='text-indigo-600 font-bold'>50% OFF</span> For Telangana Citizens </p></div>
             </div>
 
       <div className='grid grid-cols-1 md:grid-cols-2 pt-7'>

@@ -110,6 +110,13 @@ export const useAuthStore = create((set) => ({
                 // Save token in localStorage
                 localStorage.setItem("authToken", token); 
                 
+                if (token) {
+                    localStorage.setItem("authToken", token);
+                } else {
+                    console.error("No token received from API");
+                }
+                
+                
                 set({
                     isAuthenticated: true,
                     user: user, 

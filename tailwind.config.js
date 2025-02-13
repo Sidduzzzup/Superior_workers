@@ -68,6 +68,10 @@ export default {
       fontFamily: {
         archivo: ['"Archivo Black"', 'serif'], // Font family configuration
       },
+      fontFamily: {
+        helvetica: ["Helvetica", "Arial", "sans-serif"],
+      },
+
       container: {
         center: true, // Centers the container
         padding: {

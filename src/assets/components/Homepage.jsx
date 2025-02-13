@@ -9,6 +9,7 @@ import Testimonials from './Testimonials.jsx';
 import Footersection from './Footersection.jsx';
 import Counter from './Counter.jsx';
 import Subject from './Subject.jsx';
+import LiveProofSection from './LiveProofSection.jsx';
 
 
 
@@ -59,26 +60,32 @@ const Homepage = () => {
       </div>
 
 
-      <div className='flex space-x-4 pl-3 pt-10 font-mono hover:scale-125'>
-     
-      <motion.button 
-         initial={{ opacity: 0, x: -200 }}
-         animate={{ opacity: 1, x: 0 }}
-         transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
+      <div className="flex space-x-6 pl-4 pt-12 font-mono mb-5">
       
-      className='border-2 rounded-xl p-2 bg-sky-400 hover:shadow-[10px_13px_10px_rgba(0,0,0,0.4)] hover:bg-yellow-500'>
-     Book a Worker
-    </motion.button>
+      {/* Book a Worker Button */}
+      <motion.button
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: "spring", stiffness: 70, delay: 0.2 }}
+        className="px-6 py-3 text-lg font-semibold text-white bg-sky-500 border-2 border-sky-500 rounded-xl 
+                   shadow-lg transition-all duration-300 ease-in-out hover:bg-yellow-500 hover:border-yellow-500 
+                   hover:shadow-[8px_10px_15px_rgba(0,0,0,0.3)] scale-100 hover:scale-110"
+      >
+        Book a Worker
+      </motion.button>
 
-  
-    <motion.button 
-    initial={{ opacity: 0, x: 200 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
+      {/* Call Us Button */}
+      <motion.button
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: "spring", stiffness: 70, delay: 0.2 }}
+        className="px-6 py-3 text-lg font-semibold text-sky-500 bg-white border-2 border-sky-500 rounded-xl 
+                   shadow-lg transition-all duration-300 ease-in-out hover:bg-sky-500 hover:text-white 
+                   hover:shadow-[8px_10px_15px_rgba(0,0,0,0.3)] scale-100 hover:scale-110"
+      >
+        Call Us
+      </motion.button>
 
-    className='border-x-4 borderbg-sky-600 rounded-xl p-2 hover:shadow-[10px_13px_10px_rgba(0,0,0,0.4)] hover:bg-sky-400'>
-     Call Us
-    </motion.button>
     </div>
 
     
@@ -102,7 +109,9 @@ const Homepage = () => {
     
        
     </div>
+    
     <Second/>
+    <LiveProofSection/>
     <Counter/>
     <Works/>
     <Subject/>

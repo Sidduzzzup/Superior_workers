@@ -19,7 +19,7 @@ const Footersection = () => {
                   <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
                   <ul class="text-gray-500 dark:text-gray-400 font-medium">
                       <li class="mb-4">
-                          <a href="" class="hover:underline">Flowbite</a>
+                          <a href="" class="hover:underline">Material UI</a>
                       </li>
                       <li>
                           <a href="" class="hover:underline">Tailwind CSS</a>
@@ -41,7 +41,7 @@ const Footersection = () => {
                   <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
                   <ul class="text-gray-500 dark:text-gray-400 font-medium">
                       <li class="mb-4">
-                          <a href="#" class="hover:underline">Privacy Policy</a>
+                          <a href="#" class="hover:underline ">Strict action to be taken for copy Interface</a>
                       </li>
                       <li>
                           <a href="#" class="hover:underline">Terms &amp; Conditions</a>
@@ -52,7 +52,8 @@ const Footersection = () => {
       </div>
       <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="" class="hover:underline">SENTENTIAL™</a>. All Rights Reserved..IT Took Alot Of Patience To Complete</span>
+          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="" class="hover:underline">THIS WEBSITE MADE BY</a>.'SIDDARTHA KONE™' B22IT039.
           </span>
           <div class="flex mt-4 sm:justify-center sm:mt-0">
               <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">

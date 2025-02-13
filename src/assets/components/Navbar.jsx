@@ -187,26 +187,46 @@ export default function Navbar() {
             alt="LOGO"
           />
 
-          <Box sx={{ display: { xs: 'none', lg: 'flex' }, justifyContent: 'center', alignItems: 'center', ml: 3, paddingX: 5 }}>
-          <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-              <Link to="/">Home</Link>
-            </Typography>
-            <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-              <Link to="/ProfileView">Profile</Link>
-            </Typography>
-            <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-              <Link to="/Yourtasks">Your Task</Link>
-            </Typography>
-            <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-              <Link to="/">Your Orders</Link>
-            </Typography>
-            <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-              <Link to="/">Contact Us</Link>
-            </Typography>
-            <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-              <Link to="/FirstLogin">LogIn</Link>
-            </Typography>
-          </Box>
+{/* <Box
+  sx={{
+    display: { xs: 'none', lg: 'flex' },
+    justifyContent: 'center',
+    alignItems: 'center',
+    ml: 3,
+    paddingX: 5,
+    fontFamily: 'Helvetica, Arial, sans-serif !important', // Forces font at parent level
+  }}
+>
+  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
+    <Link to="/">Home</Link>
+  </Typography>
+  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
+    <Link to="/ProfileView">Profile</Link>
+  </Typography>
+  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
+    <Link to="/Yourtasks">Your Task</Link>
+  </Typography>
+  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
+    <Link to="/">Your Orders</Link>
+  </Typography>
+  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
+    <Link to="/">Contact Us</Link>
+  </Typography>
+  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
+    <Link to="/FirstLogin">LogIn</Link>
+  </Typography>
+</Box> */}
+
+<nav className="flex justify-center space-x-6 p-4 font-helvetica ml-5">
+      <Link to="/" className="text-lg">Home</Link>
+      <Link to="/ProfileView" className="text-lg">Profile</Link>
+      <Link to="/Yourtasks" className="text-lg">Your Task</Link>
+      <Link to="/" className="text-lg">Your Orders</Link>
+      <Link to="/" className="text-lg">Contact Us</Link>
+      <Link to="/FirstLogin" className="text-lg">Log In</Link>
+    </nav>
+
+
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
