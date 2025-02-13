@@ -3,7 +3,8 @@ import axios from "axios";
 
 
 
-const API_URL = "http://localhost:3000/customers";
+// const API_URL = "http://localhost:3000/customers";
+const API_URL = "https://superior-workers-backend.onrender.com/customers"; // ✅ Updated Backend URL
 
 // const API_URL = import.meta.env.MODE === "development" ? "http://localhost:5000/customers" : "/customers";
 // axios.defaults.withCredentials = true;
