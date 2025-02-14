@@ -12,7 +12,7 @@ const Yourtasks = () => {
   const getTodos = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/customers/getTodos", {
+      const response = await fetch("https://superior-workers-backend.onrender.com/customers/getTodos", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,
