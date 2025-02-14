@@ -41,7 +41,7 @@ const TodoList = () => {
     if (!newTask.trim()) return; // Don't add empty tasks
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/customers/addTask", {
+      const response = await fetch("https://superior-workers-backend.onrender.com/customers/addTask", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -68,7 +68,7 @@ const TodoList = () => {
   const handleDeleteTask = async (taskId) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/customers/deleteTodo/${taskId}`, {
+      const response = await fetch(`https://superior-workers-backend.onrender.com/customers/deleteTodo/${taskId}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`,
