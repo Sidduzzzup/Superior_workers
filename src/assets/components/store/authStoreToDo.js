@@ -10,7 +10,7 @@ export const useAuthStoreTodo = create((set) => ({
       const token = localStorage.getItem("authToken"); // Get token from storage
       if (!token) throw new Error("No token found. Please log in.");
 
-      const response = await fetch("http://localhost:3000/customers/getTodos", {
+      const response = await fetch("https://superior-workers-backend.onrender.com/customers/getTodos", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const useAuthStoreTodo = create((set) => ({
       const token = localStorage.getItem("authToken");
       if (!token) throw new Error("No token found. Please log in.");
 
-      const response = await fetch("http://localhost:3000/customers/addTask", {
+      const response = await fetch("https://superior-workers-backend.onrender.com/customers/addTask", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export const useAuthStoreTodo = create((set) => ({
       const token = localStorage.getItem("authToken");
       if (!token) throw new Error("No token found. Please log in.");
 
-      const response = await fetch(`http://localhost:3000/customers/deleteTodo/${taskId}`, {
+      const response = await fetch(`https://superior-workers-backend.onrender.com/customers/deleteTodo/${taskId}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`, // 🔥 Send token here
