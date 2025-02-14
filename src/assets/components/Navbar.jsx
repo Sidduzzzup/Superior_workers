@@ -1,22 +1,26 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase,
+  Badge,
+  MenuItem,
+  Menu,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { motion } from 'framer-motion';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
@@ -49,7 +53,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -60,13 +63,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setMobileMenuOpen(open);
+  };
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -88,201 +98,136 @@ export default function Navbar() {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={menuId}
       keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}> <Link to="/"> Home </Link> </MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to="/ProfileView"> Profile </Link> </MenuItem>
-      <MenuItem onClick={handleMenuClose}> <Link to="/LoginRouting"> My account </Link> </MenuItem>
-      <MenuItem onClick={handleMenuClose}> <Link to="/FirstLogin"> LogIn </Link> </MenuItem>
-      <MenuItem onClick={handleMenuClose}> <Link to="/LogoutConfirmation"> LogOut </Link> </MenuItem>
-      <MenuItem onClick={handleMenuClose}> <Link to="/"> Your Orders </Link> </MenuItem>
-      <MenuItem onClick={handleMenuClose}> <Link to="/TodoList"> Add Tasks </Link> </MenuItem>
-      <MenuItem onClick={handleMenuClose}> <Link to="/Yourtasks"> Your Task </Link> </MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/">Home</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/ProfileView">Profile</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/LoginRouting">My Account</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/FirstLogin">Log In</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/LogoutConfirmation">Log Out</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/">Your Orders</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/TodoList">Add Tasks</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/Yourtasks">Your Task</Link></MenuItem>
     </Menu>
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 2 new mails" color="inherit">
-          <Badge badgeContent={2} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 3 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          
-        {/* <div> <Link to='/LoginRouting'> <AccountCircle /> </Link></div> */}
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
-
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          {/* Mobile Menu Button */}
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
+            sx={{ display: { xs: 'flex', md: 'none' }, mr: 2 }}
+            onClick={toggleDrawer(true)}
           >
             <MenuIcon />
           </IconButton>
 
+          {/* LOGO */}
           <img
             className="h-12"
             src="./Sentential_logo_1080p.png"
             alt="LOGO"
+            style={{ marginRight: '15px' }}
           />
 
-{/* <Box
-  sx={{
-    display: { xs: 'none', lg: 'flex' },
-    justifyContent: 'center',
-    alignItems: 'center',
-    ml: 3,
-    paddingX: 5,
-    fontFamily: 'Helvetica, Arial, sans-serif !important', // Forces font at parent level
-  }}
->
-  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-    <Link to="/">Home</Link>
-  </Typography>
-  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-    <Link to="/ProfileView">Profile</Link>
-  </Typography>
-  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-    <Link to="/Yourtasks">Your Task</Link>
-  </Typography>
-  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-    <Link to="/">Your Orders</Link>
-  </Typography>
-  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-    <Link to="/">Contact Us</Link>
-  </Typography>
-  <Typography variant="h6" noWrap component="div" sx={{ mx: 2 }}>
-    <Link to="/FirstLogin">LogIn</Link>
-  </Typography>
-</Box> */}
+          {/* Desktop Navigation */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Home</Link>
+            <Link to="/ProfileView" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Profile</Link>
+            <Link to="/Yourtasks" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Your Task</Link>
+            <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Your Orders</Link>
+            <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Contact Us</Link>
+            <Link to="/FirstLogin" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Log In</Link>
+          </Box>
 
-<nav className="flex justify-center space-x-6 p-4 font-helvetica ml-5">
-      <Link to="/" className="text-lg">Home</Link>
-      <Link to="/ProfileView" className="text-lg">Profile</Link>
-      <Link to="/Yourtasks" className="text-lg">Your Task</Link>
-      <Link to="/" className="text-lg">Your Orders</Link>
-      <Link to="/" className="text-lg">Contact Us</Link>
-      <Link to="/FirstLogin" className="text-lg">Log In</Link>
-    </nav>
-
-
-
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          {/* Search Bar */}
+          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
+              <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
             </Search>
           </Box>
 
+          {/* Profile & Notifications */}
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 2 new mails" color="inherit">
+            <IconButton size="large" color="inherit">
               <Badge badgeContent={2} color="error">
                 <MailIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
+            <IconButton size="large" color="inherit">
               <Badge badgeContent={4} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
+            <IconButton size="large" edge="end" aria-controls={menuId} aria-haspopup="true" onClick={handleProfileMenuOpen} color="inherit">
               <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
             </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
+
+    
+
+      <Drawer
+  anchor="left"
+  open={mobileMenuOpen}
+  onClose={toggleDrawer(false)}
+  sx={{
+    '& .MuiDrawer-paper': {
+      backgroundColor: '#0b4d8f', // Black background
+      color: 'white', // Default text color
+      width: 220, // Set width
+    },
+  }}
+>
+  <List>
+    {[
+      { text: 'Home', path: '/' },
+      { text: 'Profile', path: '/ProfileView' },
+      { text: 'Your Task', path: '/Yourtasks' },
+      { text: 'Your Orders', path: '/' },
+      { text: 'Contact Us', path: '/' },
+      { text: 'Log In', path: '/FirstLogin' },
+    ].map(({ text, path }) => (
+      <ListItem button key={text} onClick={() => setMobileMenuOpen(false)}>
+        <Link
+          to={path}
+          style={{
+            textDecoration: 'none',
+            color: 'white', // Default text color
+            fontWeight: 'bold', // Make text bold
+            width: '100%',
+            padding: '10px 20px',
+            display: 'block',
+            transition: 'color 0.3s ease',
+          }}
+          onMouseEnter={(e) => (e.target.style.color = 'gray')} // Turn gray on hover
+          onMouseLeave={(e) => (e.target.style.color = 'white')} // Revert to white
+        >
+          <ListItemText primary={text} />
+        </Link>
+      </ListItem>
+    ))}
+  </List>
+</Drawer>
+
+
+
       {renderMenu}
     </Box>
   );
