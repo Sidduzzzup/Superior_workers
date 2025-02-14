@@ -47,7 +47,7 @@ const AdminDashboard = () => {
 
   const fetchUserData = async () => {
       try {
-          const response = await fetch("http://https://superior-workers-backend.onrender.com/customers/getUserStats"); // Adjust URL if needed
+          const response = await fetch("https://superior-workers-backend.onrender.com/customers/getUserStats"); // Adjust URL if needed
           const data = await response.json();
           if (data.success) {
               setUserCount(data.userCount);
