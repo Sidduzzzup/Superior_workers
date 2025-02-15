@@ -33,7 +33,7 @@ mongoose
 // }));
 
 app.use(cors({
-  origin: ["https://superior-workers-frontend.vercel.app", "http://localhost:5173"],
+  origin: ["https://superior-workers-frontend.vercel.app", "superior-workers-frontend-git-main-siddarthas-projects-676bc721.vercel.app", "superior-workers-frontend-l6i50piwy.vercel.app", "http://localhost:5173"],
   credentials: true,
 }));
 
