@@ -204,6 +204,7 @@ export default function Navbar() {
       { text: 'Your Orders', path: '/' },
       { text: 'Contact Us', path: '/' },
       { text: 'Log In', path: '/FirstLogin' },
+      { text: 'Log Out', path: '/LogoutConfirmation' },
     ].map(({ text, path }) => (
       <ListItem button key={text} onClick={() => setMobileMenuOpen(false)}>
         <Link
