@@ -40,7 +40,7 @@ const LoginRouting = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/customers/signup', data);
+      const response = await axios.post('https://superior-workers-backend.onrender.com/customers/signup', data);
       console.log("Signup response:", response.data);
       console.log("Data to be sent:", data);
       navigate("/EmailVerification");
