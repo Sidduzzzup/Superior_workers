@@ -1,16 +1,5 @@
-
 {
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "https://superior-workers-backend.onrender.com/api/$1"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
-  "cleanUrls": true
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
