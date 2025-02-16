@@ -13,7 +13,16 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: './',  // 👈 Ensures relative paths in built files
+  base: '/',  // 👈 Ensures proper routing on Vercel
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://superior-workers-backend.onrender.com',
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  },
   build: {
     outDir: 'dist',
     chunkSizeWarningLimit: 1000,
