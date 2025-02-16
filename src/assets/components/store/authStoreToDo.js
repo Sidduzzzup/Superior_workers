@@ -1,6 +1,9 @@
 
 
+
 import { create } from "zustand";
+
+const API_URL = "https://superior-workers-backend.onrender.com/customers"; // ✅ Updated API URL
 
 export const useAuthStoreTodo = create((set) => ({
   tasks: [],
@@ -10,7 +13,7 @@ export const useAuthStoreTodo = create((set) => ({
       const token = localStorage.getItem("authToken"); // Get token from storage
       if (!token) throw new Error("No token found. Please log in.");
 
-      const response = await fetch("http://localhost:3000/customers/getTodos", {
+      const response = await fetch(`${API_URL}/getTodos`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +38,7 @@ export const useAuthStoreTodo = create((set) => ({
       const token = localStorage.getItem("authToken");
       if (!token) throw new Error("No token found. Please log in.");
 
-      const response = await fetch("http://localhost:3000/customers/addTask", {
+      const response = await fetch(`${API_URL}/addTask`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +62,7 @@ export const useAuthStoreTodo = create((set) => ({
       const token = localStorage.getItem("authToken");
       if (!token) throw new Error("No token found. Please log in.");
 
-      const response = await fetch(`http://localhost:3000/customers/deleteTodo/${taskId}`, {
+      const response = await fetch(`${API_URL}/deleteTodo/${taskId}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`, // 🔥 Send token here
