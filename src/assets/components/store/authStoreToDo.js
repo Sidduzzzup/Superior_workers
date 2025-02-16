@@ -13,7 +13,7 @@ export const useAuthStoreTodo = create((set) => ({
       const token = localStorage.getItem("authToken"); // Get token from storage
       if (!token) throw new Error("No token found. Please log in.");
 
-      const response = await fetch(`${API_URL}/getTodos`, {
+      const response = await fetch("https://superior-workers-backend.onrender.com/customers/getTodos", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +38,11 @@ export const useAuthStoreTodo = create((set) => ({
       const token = localStorage.getItem("authToken");
       if (!token) throw new Error("No token found. Please log in.");
 
+<<<<<<< HEAD
       const response = await fetch(`${API_URL}/addTask`, {
+=======
+      const response = await fetch("https://superior-workers-backend.onrender.com/customers/addTask", {
+>>>>>>> 5bf94e5f33d03c9937f77b66d5f931d68ec7d74c
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +66,11 @@ export const useAuthStoreTodo = create((set) => ({
       const token = localStorage.getItem("authToken");
       if (!token) throw new Error("No token found. Please log in.");
 
+<<<<<<< HEAD
       const response = await fetch(`${API_URL}/deleteTodo/${taskId}`, {
+=======
+      const response = await fetch(`https://superior-workers-backend.onrender.com/customers/deleteTodo/${taskId}`, {
+>>>>>>> 5bf94e5f33d03c9937f77b66d5f931d68ec7d74c
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`, // 🔥 Send token here

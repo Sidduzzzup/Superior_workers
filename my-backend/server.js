@@ -1,5 +1,3 @@
-
-
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -11,28 +9,37 @@ dotenv.config();
 
 const app = express();
 
-// Environment Variables
+// Environment variables
 const JWT_SECRET = process.env.JWT_SECRET;
-const MONGO_URI = process.env.MONGO_URI;
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
-
 if (!JWT_SECRET) {
-  throw new Error("JWT_SECRET is missing. Set it in your environment variables.");
+  throw new Error("JWT_SECRET must have a value. Please set it in your .env file.");
 }
 
+const MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) {
-  throw new Error("MONGO_URI is missing. Set it in your environment variables.");
+  throw new Error("MONGO_URI must have a value. Please set it in your .env file.");
 }
 
-// Connect to MongoDB (Ensure you use MongoDB Atlas, not localhost)
+// Connect to MongoDB
 mongoose
   .connect(MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected successfully!"))
-  .catch((error) => console.error("❌ Error connecting to MongoDB:", error));
+  .then(() => console.log("MongoDB connected successfully!"))
+  .catch((error) => console.error("Error connecting to MongoDB:", error));
 
 // Middleware
-app.use(cors({ origin: FRONTEND_URL, credentials: true }));
-app.use(express.json());
+// app.use(cors({
+//   origin: process.env.FRONTEND_URL || "http://localhost:5173",
+//   credentials: true,
+// }));
+
+app.use(cors({
+  origin: ["https://superior-workers-frontend.vercel.app", "superior-workers-frontend-git-main-siddarthas-projects-676bc721.vercel.app", "superior-workers-frontend-nx41vy77o.vercel.app", "http://localhost:5173"],
+  credentials: true,
+}));
+
+
+
+app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -45,11 +52,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Internal Server Error" });
 });
 
-// const PORT = process.env.PORT || 3000;
-// app.listen(PORT, () => {
-//   console.log(`Server started running on port ${PORT}`);
-// });
-
+// Server Port
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server running on port ${PORT}`);
