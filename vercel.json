@@ -1,12 +1,28 @@
+// {
+//   "rewrites": [
+//     {
+//       "source": "/api/(.*)",
+//       "destination": "https://superior-workers-backend.onrender.com/api/$1"
+//     },
+//     {
+//       "source": "/(.*)",
+//       "destination": "/index.html"
+//     }
+//   ],
+//   "cleanUrls": true
+// }
+
 {
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "https://superior-workers-backend.onrender.com/api/$1"
-    },
+    }
+  ],
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "cleanUrls": true
