@@ -7,8 +7,9 @@
     "dev": "vite",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build": "react-scripts build",
-    "postinstall": "react-scripts build"
+    "build": "vite build",
+    "postinstall": "vite build"
+
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
