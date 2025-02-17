@@ -21,24 +21,23 @@
 // });
 
 
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/',  // 👈 Ensures proper routing on Vercel
+  base: '/',  // Keep this if using absolute paths, or change to './' for relative
   server: {
     proxy: {
       '/api': {
         target: 'https://superior-workers-backend.onrender.com',
         changeOrigin: true,
-        secure: false
+        secure: true
       }
     }
   },
   build: {
     outDir: 'dist',
-    chunkSizeWarningLimit: 1000,
-  },
+    chunkSizeWarningLimit: 1000
+  }
 });
