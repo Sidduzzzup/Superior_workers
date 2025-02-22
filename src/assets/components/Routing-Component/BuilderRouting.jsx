@@ -6,7 +6,7 @@ const BuilderRouting = () => {
   return (<>
     <div className='container py-5 md:py-10 grid grid-cols-1 md:grid-cols-2 '>
       <div className='ml-28'>
-        <img  className='h-[500px] mt-2' src="./public/pngfind.com-construction-worker-png-627358.png" alt="" />
+        <img  className='h-[500px] mt-2' src="/pngfind.com-construction-worker-png-627358.png" alt="" />
       </div>
       <div>
       <motion.div 

@@ -91,7 +91,7 @@ const Homepage = () => {
           transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
           className=''
            
-          src="../../../public/DeWatermark.ai_1740228700651_bgremoved.png"
+          src="/DeWatermark.ai_1740228700651_bgremoved.png"
             alt="HOMEPAGE_LOGO" />
             
 
