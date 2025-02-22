@@ -4,9 +4,9 @@ import Footersection from '../Footersection';
 
 const BuilderRouting = () => {
   return (<>
-    <div className='container py-5 md:py-10 grid grid-cols-1 md:grid-cols-2'>
-      <div>
-        <img src="./videoframe_6205.png" alt="" />
+    <div className='container py-5 md:py-10 grid grid-cols-1 md:grid-cols-2 '>
+      <div className='ml-28'>
+        <img  className='h-[500px] mt-2' src="./public/pngfind.com-construction-worker-png-627358.png" alt="" />
       </div>
       <div>
       <motion.div 
@@ -14,7 +14,7 @@ const BuilderRouting = () => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
       className="space-y-4 p-6 text-center max-w-[600px] mx-auto mb-5">
-          <h1 className="uppercase font-semibold text-orange-500">
+          <h1 className="uppercase text-orange-500 font-extrabold text-3xl">
             Builder Chaos
           </h1>
           <p className="font-semibold text-3xl">

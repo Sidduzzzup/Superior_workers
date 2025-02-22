@@ -22,7 +22,7 @@ const CEOPortal = () => {
         <div className="flex justify-between items-center mb-8 overflow-x-hidden">
           <div className="flex items-center space-x-4">
             <img
-              src="../../../../public/mamaand me.jpg"
+              src="/public/mamaand_me.jpg"
               alt="CEO"
               className="w-24 h-24 rounded-full object-cover"
             />

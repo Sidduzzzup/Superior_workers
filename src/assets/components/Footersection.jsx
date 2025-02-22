@@ -5,46 +5,46 @@ const Footersection = () => {
     <div>
       
 
-<footer class="bg-white dark:bg-gray-900">
+<footer class="bg-gray-400">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
               <a href="#" class="flex items-center">
-                  <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" />
+                  <img src="/public/istockphoto-168362728-612x612.png" class="h-12 me-3" alt="FlowBite Logo" />
                   <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SENTENTIAL</span>
               </a>
           </div>
           <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
-                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                  <h2 class="mb-6 text-base font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
+                  <ul class="text-black font-medium">
                       <li class="mb-4">
-                          <a href="" class="hover:underline">Material UI</a>
+                          <a href="" class="hover:underline text-sm">Material UI</a>
                       </li>
                       <li>
-                          <a href="" class="hover:underline">Tailwind CSS</a>
+                          <a href="" class="hover:underline text-sm">Tailwind CSS</a>
                       </li>
                   </ul>
               </div>
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
-                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                  <h2 class="mb-6 text-base font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
+                  <ul class="text-black  font-medium">
                       <li class="mb-4">
-                          <a href="" class="hover:underline ">Github</a>
+                          <a href="" class="hover:underline text-sm">Github</a>
                       </li>
                       <li>
-                          <a href="" class="hover:underline">Discord</a>
+                          <a href="" class="hover:underline text-sm">Discord</a>
                       </li>
                   </ul>
               </div>
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
-                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                  <h2 class="mb-6 text-base font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
+                  <ul class="text-black  font-medium">
                       <li class="mb-4">
-                          <a href="#" class="hover:underline ">Strict action to be taken for copy Interface</a>
+                          <a href="#" class="hover:underline text-sm">Strict action to be taken for copy Interface</a>
                       </li>
                       <li>
-                          <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                          <a href="#" class="hover:underline text-sm">Terms &amp; Conditions</a>
                       </li>
                   </ul>
               </div>
@@ -52,8 +52,8 @@ const Footersection = () => {
       </div>
       <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="" class="hover:underline">SENTENTIAL™</a>. All Rights Reserved..IT Took Alot Of Patience To Complete</span>
-          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="" class="hover:underline">THIS WEBSITE MADE BY</a>.'SIDDARTHA KONE™' B22IT039.
+          <span class="text-sm text-black  sm:text-center">© 2025 <a href="" class="hover:underline">SENTENTIAL™</a>. All Rights Reserved..IT Took Alot Of Patience To Complete</span>
+          <span class="text-sm text-black  sm:text-center">© 2025 <a href="" class="hover:underline">THIS WEBSITE MADE BY</a>.'SIDDARTHA KONE™' B22IT039.
           </span>
           <div class="flex mt-4 sm:justify-center sm:mt-0">
               <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">

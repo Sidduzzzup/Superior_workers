@@ -173,15 +173,14 @@ const Works = () => {
                     skilled carpenters are here to provide high-quality work tailored to your needs. Reach out to us for expert craftsmanship and reliable service</motion.p>
 
                     <div className="flex justify-center md:justify-start items-center  hover:scale-110">
-        <motion.button
+                    <Link to='/CarpenterRouting'> <motion.button
             initial={{ opacity: 0, x: -200 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
             className="border-2 text-sm mb-5 text-black  md:text-md rounded-full p-1 px-3 md:p-3 md:px-5 font-semibold bg-sky-500 
-                   transform transition-transform ease-in-out hover:shadow-[10px_13px_10px_rgba(0,0,0,0.4)] hover:bg-yellow-500"
-        >
+                   transform transition-transform duration-100 ease-in-out hover:shadow-[10px_13px_10px_rgba(0,0,0,0.4)] hover:bg-yellow-500">
             Book a Worker
-        </motion.button>
+        </motion.button></Link>
         </div>
 
       </div>

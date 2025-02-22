@@ -1,10 +1,5 @@
-
-
 import React from 'react';
-
 import { motion } from 'framer-motion';
-
-
 import Second from './Second.jsx'
 import Works from './/Works.jsx';
 import Testimonials from './Testimonials.jsx';
@@ -14,14 +9,8 @@ import Subject from './Subject.jsx';
 import LiveProofSection from './LiveProofSection.jsx';
 
 
-
-
-
-
 const Homepage = () => {
   return (<>
-
-
        
       
     <div className='container grid grid-cols-1 md:grid-cols-2 home-height w-screen'>
@@ -102,7 +91,7 @@ const Homepage = () => {
           transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
           className=''
            
-          src='./photo_2025-01-11_11-02-37.jpg'
+          src='./public/DeWatermark.ai_1740228700651_bgremoved.png'
             alt="LOGO" />
             
 

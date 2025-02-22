@@ -28,6 +28,7 @@ import AdminDashboard from './assets/components/OwnerComponents/AdminDashboard.j
 import Yourtasks from './assets/components/Routing-Component/Yourtasks.jsx';
 import CEOPortal from './assets/components/OwnerComponents/CEOPortal.jsx';
 import LiveProofSection from './assets/components/LiveProofSection.jsx'
+import CarpenterRouting from './assets/components/Routing-Component/Carpenter_Routing.jsx';
 
 // Protected route for admins only
 // const AdminOnlyRoute = ({ children }) => {
@@ -153,7 +154,10 @@ function AppContent() {
         <Route path="/forgot-password" element={<ResetEmailRequest />} />
         <Route path='/CEOPortal' element={<CEOPortal/>} />
         <Route path='/LiveProofSection' element={<LiveProofSection/>} />
-      
+        <Route path='/CarpenterRouting' element={<CarpenterRouting/>} />
+
+    
+  
       
         {/* Protected routes */}
         <Route

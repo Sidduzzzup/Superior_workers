@@ -137,9 +137,9 @@ export default function Navbar() {
           {/* LOGO */}
           <img
             className="h-12"
-            src="./Sentential_logo_1080p.png"
+            src="/public/istockphoto-168362728-612x612.png"
             alt="LOGO"
-            style={{ marginRight: '15px' }}
+            style={{ marginRight: '15px', height: '70px', width: '90px' , margin: '5px'}}
           />
 
           {/* Desktop Navigation */}

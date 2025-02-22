@@ -29,7 +29,7 @@ const Counter = () => {
           <p className="font-bold whitespace-nowrap">
             <CountUp start={0} end={40} duration={8} separator="," suffix="+" />
           </p>
-          <h1 className="font-semibold whitespace-nowrap">Branch Across US</h1>
+          <h1 className="font-semibold whitespace-nowrap">Branch Across INDIA</h1>
         </div>
       </div>
     </div>
