@@ -140,6 +140,7 @@ function AppContent() {
         />
 
         <Route path="/LogoutConfirmation" element={<LogoutConfirmation />} />
+        <Route path="/" element={<Homepage />} />
 
         {/* Routes for different services */}
         <Route path="/BuilderRouting" element={<BuilderRouting />} />

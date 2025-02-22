@@ -92,7 +92,7 @@ const Homepage = () => {
           className=''
            
           src='./public/DeWatermark.ai_1740228700651_bgremoved.png'
-            alt="LOGO" />
+            alt="HOMEPAGE_LOGO" />
             
 
         </div>
