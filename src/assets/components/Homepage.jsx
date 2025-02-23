@@ -14,9 +14,24 @@ const Homepage = () => {
        
       
     <div className='container grid grid-cols-1 md:grid-cols-2 home-height w-screen'>
+
     
- 
-        <div className='flex items-start pt-28'>
+    <div className='md:hidden size-auto justify-center items-center  mt-24' >
+         <motion.img
+          initial={{ opacity: 0, x: 200 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
+          className=''
+           
+          src="/DeWatermark.ai_1740228700651_bgremoved.png"
+            alt="HOMEPAGE_LOGO" />
+            
+
+        </div>
+
+        <div className='flex items-start pt-5 md:pt-28'>
+        
+
        <div>
 
 
@@ -84,7 +99,7 @@ const Homepage = () => {
       </div>
       </div>
       
-       <div className='size-auto flex justify-center items-center  mt-24' >
+       <div className='hidden md:block size-auto justify-center items-center  mt-24' >
          <motion.img
           initial={{ opacity: 0, x: 200 }}
           animate={{ opacity: 1, x: 0 }}
