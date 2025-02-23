@@ -7,7 +7,7 @@ const PlumberRouting = () => {
   return (<>
       <div className='container py-5 md:py-10 grid grid-cols-1 md:grid-cols-2 mb-[110px]'>
       <div>
-        <img className="h-[400px] absolute top-28" src= "/pngfind.com-construction-worker-png-1649001.png"  alt="Plumber" />
+        <img className="h-[350px] md:h-[400px] md:absolute md:top-28" src= "/pngfind.com-construction-worker-png-1649001.png"  alt="Plumber" />
       </div>
       <div>
       <motion.div 
@@ -18,7 +18,7 @@ const PlumberRouting = () => {
           <h1 className="uppercase text-orange-500 font-extrabold text-3xl">
             Plumber Chaos
           </h1>
-          <p className="font-semibold text-3xl">
+          <p className="font-semibold text-xl md:text-3xl">
            We Have Highly Experienced Plumbers in United States
           </p>
 

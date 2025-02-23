@@ -88,7 +88,7 @@ const TestimonialSection = () => {
 
               
             <div><h2 className='flex justify-center align-middle text-orange-500 font-bold text-xl pt-36'>OUR TESTIMONIALS</h2></div>
-            <div><h1 className='flex justify-center align-middle content-center p-4 font-bold text-3xl'> What Our Customers Say About Us</h1></div>
+            <div><h1 className='flex justify-center align-middle content-center p-4 font-bold text-lg md:text-3xl'> What Our Customers Say About Us</h1></div>
             
         
 

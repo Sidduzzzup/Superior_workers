@@ -6,7 +6,7 @@ const BuilderRouting = () => {
   return (<>
     <div className='container py-5 md:py-10 grid grid-cols-1 md:grid-cols-2 '>
       <div className='ml-28'>
-        <img  className='h-[500px] mt-2' src="/pngfind.com-construction-worker-png-627358.png" alt="" />
+        <img  className='h-[400px] md:h-[500px] mt-2' src="/pngfind.com-construction-worker-png-627358.png" alt="" />
       </div>
       <div>
       <motion.div 
@@ -17,7 +17,7 @@ const BuilderRouting = () => {
           <h1 className="uppercase text-orange-500 font-extrabold text-3xl">
             Builder Chaos
           </h1>
-          <p className="font-semibold text-3xl">
+          <p className="font-semibold text-xl sm:text-3xl">
            We Have Highly Experienced Builders in United States
           </p>
 

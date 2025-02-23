@@ -7,7 +7,7 @@ const Electrician = () => {
 
      <div className='container py-5 md:py-10 grid grid-cols-1 md:grid-cols-2'>
               <div className='pl-36'>
-                <img src= "/pngfind.com-construction-hat-png-2617311.png" className='h-[550px]'  alt="Plumber" />
+                <img src= "/pngfind.com-construction-hat-png-2617311.png" className='h-[400px] md:h-[550px]'  alt="Plumber" />
               </div>
               <div>
               <motion.div 
@@ -18,7 +18,7 @@ const Electrician = () => {
                   <h1 className="uppercase text-orange-500 font-extrabold text-3xl">
                     Electrician Chaos
                   </h1>
-                  <p className="font-semibold text-3xl">
+                  <p className="font-semibold text-xl md:text-3xl">
                    We Have Highly Experienced Electrician in United States
                   </p>
         

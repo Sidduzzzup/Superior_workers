@@ -6,18 +6,12 @@ const Subject = () => {
     const subjectList = [
         {
           id: 1,
-          name: "1-1 Call",
+          name: "Free-Consultation",
           icon: <FaComputer />,
           color: "#0063ff",
           delay: 0.2,
         },
-        {
-          id: 2,
-          name: "3-Months Warranty",
-          icon: <FaBook />,
-          color: "#00c986",
-          delay: 0.3,
-        },
+       
         {
           id: 3,
           name: "All-Kinds-Works",
@@ -53,24 +47,18 @@ const Subject = () => {
           color: "#b93838",
           delay: 0.8,
         },
-        {
-          id: 8,
-          name: "See all",
-          icon: <FaBook />,
-          color: "#464646",
-          delay: 0.9,
-        },
+      
       ];
       
   return (
     <div>
-        <div className="container py-10 md:py-28">
+        <div className="container py-1 md:py-28">
         {/* header section */}
-        <div className="space-y-4 p-6 text-center max-w-[600px] mx-auto mb-5">
+        <div className="space-y-4 p-6 text-center max-w-[600px] mx-auto">
           <h1 className="uppercase font-semibold text-orange-500">
             Our Services
           </h1>
-          <p className="font-semibold text-3xl">
+          <p className="font-bold text-lg md:text-3xl">
             Reasons For Top Online Bookings in The Indian States
           </p>
         </div>
