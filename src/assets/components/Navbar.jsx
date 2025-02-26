@@ -128,19 +128,20 @@ export default function Navbar() {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ display: { xs: 'flex', md: 'none' }, mr: 2 }}
+            sx={{ display: { xs: 'flex', md: 'none' }, mr: 0 }}
             onClick={toggleDrawer(true)}
           >
             <MenuIcon />
           </IconButton>
 
           {/* LOGO */}
+        <div className='flex justify-start'>
           <img
-            className="h-12"
-            src="/istockphoto-168362728-612x612.png"
+            className="h-14 m-3 mr-8 "
+            src="/photo_2025-02-26_23-00-38.png"
             alt="LOGO"
-            style={{ marginRight: '15px', height: '70px', width: '90px' , margin: '5px'}}
           />
+          </div>
 
           {/* Desktop Navigation */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
