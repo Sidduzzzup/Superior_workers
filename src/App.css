@@ -1,9 +1,0 @@
-.container {
-    overflow-x: auto;
-    scrollbar-width: none; /* For Firefox */
-  }
-  
-  .container::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Edge */
-  }
-  
