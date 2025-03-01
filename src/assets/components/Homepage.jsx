@@ -70,14 +70,15 @@ const Homepage = () => {
       
       {/* Book a Worker Button */}
       <motion.button
+      onClick={()=>window.location.href='/Works'}
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ type: "spring", stiffness: 70, delay: 0.2 }}
         className=" px-2 p-3 md:px-6 md:py-3 text-sm md:text-lg font-semibold text-white bg-sky-500 border-2 border-sky-500 rounded-xl 
                    shadow-lg transition-all duration-300 ease-in-out hover:bg-yellow-500 hover:border-yellow-500 
-                   hover:shadow-[8px_10px_15px_rgba(0,0,0,0.3)] scale-100 hover:scale-110"
-      >
-        Book a Worker
+                   hover:shadow-[8px_10px_15px_rgba(0,0,0,0.3)] scale-100 hover:scale-110" >
+                     
+       Book a Worker
       </motion.button>
 
       {/* Call Us Button */}

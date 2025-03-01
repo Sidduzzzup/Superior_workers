@@ -1,8 +1,17 @@
 import React from 'react'
 import Footersection from '../Footersection';
+import { useNavigate } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
 const Electrician = () => {
+  const navigate = useNavigate();
+
+     
+  const handleBookNow = () => {
+    navigate(`/workers/electrician`);  // Navigates to WorkerList with "plumber"
+  };
+
+
   return (<>
 
      <div className='container py-5 md:py-10 grid grid-cols-1 md:grid-cols-2'>
@@ -19,10 +28,10 @@ const Electrician = () => {
                     Electrician Chaos
                   </h1>
                   <p className="font-semibold text-xl md:text-3xl">
-                   We Have Highly Experienced Electrician in United States
+                   We Have Highly Experienced Electrician in INDIA
                   </p>
         
-                  <div className='pt-6'><button className='border-2 rounded-xl font-semibold p-2 bg-sky-400 hover:shadow-[10px_13px_10px_rgba(0,0,0,0.4)] hover:bg-yellow-500'>
+                  <div onClick={handleBookNow} className='pt-6'><button className='border-2 rounded-xl font-semibold p-2 bg-sky-400 hover:shadow-[10px_13px_10px_rgba(0,0,0,0.4)] hover:bg-yellow-500'>
              BOOK NOW
             </button></div>
             </motion.div>

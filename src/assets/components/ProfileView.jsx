@@ -196,6 +196,9 @@ const ProfileView = () => {
                 </div>
               ))}
             </div>
+            <div>
+              {/* add address */}
+              </div>
           </div>
         </div>
       </div>

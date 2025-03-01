@@ -225,6 +225,8 @@ import CEOPortal from './assets/components/OwnerComponents/CEOPortal.jsx';
 import LiveProofSection from './assets/components/LiveProofSection.jsx'
 import CarpenterRouting from './assets/components/Routing-Component/Carpenter_Routing.jsx';
 import EmployeeDashboard from './Employe_Component/EmployeeDashboard.jsx';
+import Works from './assets/components/Works.jsx';
+import WorkerList from './assets/components/Final_ordering/WorkerList.jsx';
 
 // Admin-only protected route
 const AdminOnlyRoute = ({ children }) => {
@@ -309,6 +311,8 @@ function AppContent() {
         <Route path="/BuilderRouting" element={<BuilderRouting />} />
         <Route path="/PlumberRouting" element={<PlumberRouting />} />
         <Route path="/Electrician" element={<Electrician />} />
+        <Route path="/Works" element={<Works />} />
+        <Route path="/workers/:category" element={<WorkerList />} />
 
         {/* Password Recovery Routes */}
         <Route path="/ResetEmailRequest" element={<ResetEmailRequest />} />

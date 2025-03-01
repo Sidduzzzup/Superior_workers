@@ -10,6 +10,12 @@ const Works = () => {
             <p className='font-semibold text-xs sm:text-sm'>Book Online Now <span className='text-indigo-600 font-bold'>50% OFF</span> For Telangana Citizens </p></div>
             </div>
 
+            
+       <div className='flex justify-center pt-5'>
+       <h2 className=' text-sky-600 font-helvetica font-bold text-xl'>We Have Most Experienced Workers</h2>
+        </div>
+
+      
       <div className='grid grid-cols-1 md:grid-cols-2 pt-7'>
       <div className='flex justify-center md:order-1'>
                 <motion.img 

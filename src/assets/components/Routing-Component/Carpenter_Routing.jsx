@@ -1,9 +1,16 @@
 import React from 'react';
 import Footersection from '../Footersection';
+import { useNavigate } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
 
 const Carpenter_Routing = () => {
+  const navigate = useNavigate();
+
+  const handleBookNow = () => {
+    navigate(`/workers/carpenter`);  // Navigates to WorkerList with "plumber"
+  };
+
   return (<>
       <div className='container py-5 md:py-10 grid grid-cols-1 md:grid-cols-2 mb-[110px]'>
       <div className="ml-14">
@@ -22,7 +29,7 @@ const Carpenter_Routing = () => {
           From furniture repairs to custom woodworking, our
           skilled carpenters are here to provide high-quality work tailored to your needs. </p>
 
-          <div className='pt-6'><button className='border-2 rounded-xl font-semibold p-2 bg-sky-400 hover:shadow-[10px_13px_10px_rgba(0,0,0,0.4)] hover:bg-yellow-500'>
+          <div onClick={handleBookNow} className='pt-6'><button className='border-2 rounded-xl font-semibold p-2 bg-sky-400 hover:shadow-[10px_13px_10px_rgba(0,0,0,0.4)] hover:bg-yellow-500'>
      BOOK NOW
     </button> </div> 
     </motion.div>
