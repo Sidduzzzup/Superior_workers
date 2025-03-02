@@ -227,6 +227,8 @@ import CarpenterRouting from './assets/components/Routing-Component/Carpenter_Ro
 import EmployeeDashboard from './Employe_Component/EmployeeDashboard.jsx';
 import Works from './assets/components/Works.jsx';
 import WorkerList from './assets/components/Final_ordering/WorkerList.jsx';
+import EmployeeLogin from './Employe_Component/EmployeeLogin.jsx';
+import EmployeeSignUp from './Employe_Component/EmployeeSignUp.jsx';
 
 // Admin-only protected route
 const AdminOnlyRoute = ({ children }) => {
@@ -301,8 +303,10 @@ function AppContent() {
         <Route path="/" element={<Homepage />} />
 
         {/* Authentication Routes */}
-        <Route path="/LoginRouting" element={<RedirectAuthenticatedUser><LoginRouting /></RedirectAuthenticatedUser>} />
-        <Route path="/FirstLogin" element={<RedirectAuthenticatedUser><FirstLogin /></RedirectAuthenticatedUser>} />
+        <Route path="/LoginRouting" element={<RedirectAuthenticatedUser> <LoginRouting /> </RedirectAuthenticatedUser>} />
+        <Route path="/FirstLogin" element={<RedirectAuthenticatedUser> <FirstLogin /> </RedirectAuthenticatedUser>} />
+        <Route path="/EmployeeLogin" element={<RedirectAuthenticatedUser> <EmployeeLogin /> </RedirectAuthenticatedUser>} />
+        <Route path="/EmployeeSignUp" element={<RedirectAuthenticatedUser> <EmployeeSignUp /> </RedirectAuthenticatedUser>} />
 
         <Route path="/LogoutConfirmation" element={<LogoutConfirmation />} />
         <Route path="/EmailVerification" element={<EmailVerification />} />
