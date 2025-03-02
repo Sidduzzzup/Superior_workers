@@ -27,10 +27,6 @@ mongoose
   .catch((error) => console.error("Error connecting to MongoDB:", error));
 
 // Middleware
-// app.use(cors({
-//   origin: process.env.FRONTEND_URL || "http://localhost:5173",
-//   credentials: true,
-// }));
 
 app.use(cors({
   origin: ["https://superior-workers-frontend.vercel.app", "superior-workers-frontend-git-main-siddarthas-projects-676bc721.vercel.app", "superior-workers-frontend-nx41vy77o.vercel.app", "http://localhost:5173"],

@@ -42,9 +42,9 @@ const ProfileView = () => {
 
   useEffect(() => {
     const motivationalQuotes = [
-      "Every day is a new opportunity to grow and learn.",
-      "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-      "The only way to do great work is to love what you do.",
+      "Reliable, skilled, and just a call away—get your minor home repairs done with ease and perfection!",
+       "No job is too small when it comes to making your home perfect—trust us for quick, hassle-free fixes!",
+         "From fixing leaks to assembling furniture, we handle the little things so you can enjoy the big moments!"
     ];
 
     const interval = setInterval(() => {

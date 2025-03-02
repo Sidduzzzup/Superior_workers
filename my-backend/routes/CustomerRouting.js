@@ -4,7 +4,7 @@ import { createcustomer, getcustomer, updatecustomer, deletecustomer,
      forgotPassword,resetPassword} from '../controllers/CutomerController.js';
      import { verifyToken } from "../middleware/verifyToken.js";
      import { checkAuth } from "../controllers/CutomerController.js"; 
-     import { registerEmployee, loginEmployee } from "../controllers/employeeController.js";
+     import { registerEmployee, loginEmployee, logoutEmployee } from "../controllers/employeeController.js";
     
      import {
           getTodos,
@@ -40,6 +40,7 @@ router.post("/addTask", verifyToken, createTodo);
 router.delete("/deleteTodo/:id", verifyToken, deleteTodo);
 router.post("/register-employee", registerEmployee);
 router.post("/login-employee", loginEmployee);
+router.post("/logout-employee", logoutEmployee);
 
 // router.patch("/tasks/:id", toggleTaskCompletion); // Update task completion status
 
