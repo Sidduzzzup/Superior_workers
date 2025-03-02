@@ -113,6 +113,7 @@ export default function Navbar() {
       <MenuItem onClick={handleMenuClose}><Link to="/">Your Orders</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link to="/TodoList">Add Tasks</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link to="/Yourtasks">Your Task</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/Yourtasks">Employee</Link></MenuItem>
     </Menu>
   );
 
@@ -151,7 +152,8 @@ export default function Navbar() {
             <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Your Orders</Link>
             <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Contact Us</Link>
             <Link to="/FirstLogin" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Log In</Link>
-            <Link to="/LogoutConfirmation" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Log Out</Link>      
+            <Link to="/LogoutConfirmation" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Log Out</Link>    
+            <Link to="/EmployeeLogin" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Employee</Link>   
         </Box>
 
           {/* Search Bar */}
