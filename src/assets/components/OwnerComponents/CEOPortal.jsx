@@ -135,7 +135,7 @@ const CEOPortal = () => {
                 ))}
               </div>
               <div>
-                <img  className="rounded-xl mt-10 h-[200px] w-full" src="/public/freedomofnorthkorestatue.jpg" alt="Great freedom of North Korea" />
+                <img  className="rounded-xl mt-10 h-[200px] w-full" src="/freedomofnorthkorestatue.jpg" alt="Great freedom of North Korea" />
               </div>
               <div>
                 <img  className="rounded-xl mt-10 h-[250px] border-none w-full" src="/WellcomeNorthkOreCart3.jpg" alt="Great freedom of North Korea" />

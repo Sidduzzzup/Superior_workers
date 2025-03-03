@@ -14,6 +14,7 @@ const ProfileView = () => {
   const [isEditing, setIsEditing] = useState(false); // Edit state
   const [isImageLoaded, setIsImageLoaded] = useState(false); // Image load state
   const [currentQuote, setCurrentQuote] = useState(""); // Motivational quote state
+  const [address, setAddress] = useState(""); // Address state
 
   useEffect(() => {
     if (user) {
@@ -153,6 +154,31 @@ const ProfileView = () => {
               </div>
             </div>
 
+
+
+
+            <div className="p-4 bg-gray-100 rounded-lg shadow-lg w-full m-4">
+      <h2 className="text-lg font-semibold mb-2">Enter Your Address</h2>
+      <textarea
+        className="w-full p-2 border rounded-lg"
+        rows="5"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        placeholder="Type your address here..."
+      />
+      <button
+        className="mt-2 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+        onClick={"/"}
+        // handleSave
+      >
+        Save Address
+      </button>
+    </div>
+
+
+
+
+
             <div className="flex gap-4 mt-6">
               <a
                 href={profileData.socialLinks.linkedin}
@@ -202,6 +228,11 @@ const ProfileView = () => {
           </div>
         </div>
       </div>
+
+
+   
+
+
     </div>
   );
 };
