@@ -53,50 +53,110 @@ export const useAuthStore = create((set) => ({
         }
     },
 
+    // login: async (email, password) => {
+    //     set({ isLoading: true, error: null });
+    //     try {
+    //         const response = await axios.post(`${API_URL}/login`, { email, password });
+    //         const { token, user } = response.data;
+
+    //         // Save token in localStorage
+    //         localStorage.setItem("authToken", token);
+
+    //         if (token) {
+    //             localStorage.setItem("authToken", token);
+    //         } else {
+    //             console.error("No token received from API");
+    //         }
+
+    //         set({
+    //             isAuthenticated: true,
+    //             user: user,
+    //             error: null,
+    //             isLoading: false,
+    //         });
+
+    //         // Redirect based on role
+    //         if (user.isAdmin) {
+    //             window.location.href = "/AdminDashboard"; // Redirect Admins
+    //         } else {
+    //             window.location.href = "/"; // Redirect Regular Users to Home
+    //         }
+    //     } catch (error) {
+    //         set({ error: error.response?.data?.message || "Error logging in", isLoading: false });
+    //         throw error;
+    //     }
+    // },
+
+    // checkAuth: async () => {
+    //     set({ isCheckingAuth: true, error: null });
+    //     try {
+    //         const token = localStorage.getItem("authToken"); // Get token from localStorage
+    //         if (!token) throw new Error("No token found");
+
+    //         const response = await axios.get(`${API_URL}/check-auth`, {
+    //             headers: { Authorization: `Bearer ${token}` }, // Attach token in Authorization header
+    //         });
+
+    //         set({
+    //             user: response.data.user,
+    //             isAuthenticated: true,
+    //             isCheckingAuth: false
+    //         });
+    //     } catch (error) {
+    //         console.error("Auth check failed:", error);
+    //         set({ error: null, isCheckingAuth: false, isAuthenticated: false });
+    //         localStorage.removeItem("authToken"); // Clear token if authentication fails
+    //     }
+    // },
+
+
+
+
     login: async (email, password) => {
         set({ isLoading: true, error: null });
         try {
             const response = await axios.post(`${API_URL}/login`, { email, password });
             const { token, user } = response.data;
-
+    
+            if (!token || !user) {
+                throw new Error("Invalid response from server: Missing token or user data.");
+            }
+    
             // Save token in localStorage
             localStorage.setItem("authToken", token);
-
-            if (token) {
-                localStorage.setItem("authToken", token);
-            } else {
-                console.error("No token received from API");
-            }
-
+    
             set({
                 isAuthenticated: true,
                 user: user,
                 error: null,
                 isLoading: false,
             });
-
+    
             // Redirect based on role
-            if (user.isAdmin) {
-                window.location.href = "/AdminDashboard"; // Redirect Admins
-            } else {
-                window.location.href = "/"; // Redirect Regular Users to Home
-            }
+            window.location.href = user.isAdmin ? "/AdminDashboard" : "/";
         } catch (error) {
+            console.error("Login error:", error);
             set({ error: error.response?.data?.message || "Error logging in", isLoading: false });
             throw error;
         }
     },
 
+
+    
     checkAuth: async () => {
         set({ isCheckingAuth: true, error: null });
         try {
-            const token = localStorage.getItem("authToken"); // Get token from localStorage
+            const token = localStorage.getItem("authToken");
+            console.log("Retrieved token:", token); // Debugging step
+    
             if (!token) throw new Error("No token found");
-
+    
             const response = await axios.get(`${API_URL}/check-auth`, {
-                headers: { Authorization: `Bearer ${token}` }, // Attach token in Authorization header
+                headers: { Authorization: `Bearer ${token}` },
             });
-
+    
+            console.log("User authenticated:", response.data.user); // Debugging step
+    
             set({
                 user: response.data.user,
                 isAuthenticated: true,
@@ -105,9 +165,14 @@ export const useAuthStore = create((set) => ({
         } catch (error) {
             console.error("Auth check failed:", error);
             set({ error: null, isCheckingAuth: false, isAuthenticated: false });
-            localStorage.removeItem("authToken"); // Clear token if authentication fails
+            localStorage.removeItem("authToken");
         }
     },
+    
+
+
+
+
 
     logout: async () => {
         set({ isLoading: true, error: null });

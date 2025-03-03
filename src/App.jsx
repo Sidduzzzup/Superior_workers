@@ -1,5 +1,6 @@
 
 
+
 import { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -36,53 +37,21 @@ import EmployeeLogin from './Employe_Component/EmployeeLogin.jsx';
 import EmployeeSignUp from './Employe_Component/EmployeeSignUp.jsx';
 import LogoutConfirmationEMP from './Employe_Component/LogoutConfirmationEmp.jsx';
 
-// Admin-only protected route
 const AdminOnlyRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
-
-  if (!isAuthenticated || !user?.isAdmin) {
-    return <Navigate to="/" replace />;
-  }
-
-  return children;
+  return !isAuthenticated || !user?.isAdmin ? <Navigate to="/" replace /> : children;
 };
 
-// Protected Route (for authenticated users only)
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
-
-  if (!isAuthenticated) {
-    return <Navigate to='/FirstLogin' replace />;
-  }
-
-  if (user?.isAdmin) {
-    return <Navigate to="/AdminDashboard" replace />;
-  }
-
+  if (!isAuthenticated) return <Navigate to='/FirstLogin' replace />;
+  if (user?.isAdmin) return <Navigate to="/AdminDashboard" replace />;
   return children;
 };
 
-////redirecting to employee dashboard
-const ProtectedRouteEMP = ({ children }) => {
-  const { isAuthenticated, user } = useAuthStore();
-
-  if (!isAuthenticated) {
-    return <Navigate to='/EmployeeLogin' replace />;
-  }
-
-  return children;
-};
-
-
-// Redirect authenticated users to home/admin dashboard
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
-
-  if (isAuthenticated) {
-    return user.isAdmin ? <Navigate to="/AdminDashboard" replace /> : <Navigate to="/" replace />;
-  }
-
-  return children;
+  return isAuthenticated ? <Navigate to={user.isAdmin ? "/AdminDashboard" : "/"} replace /> : children;
 };
 
 function App() {
@@ -90,14 +59,15 @@ function App() {
   const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
-    const hasCheckedAuth = sessionStorage.getItem("authChecked");
-
-    if (!hasCheckedAuth) {
-      checkAuth();
-      sessionStorage.setItem("authChecked", "true"); // Store that authentication was checked
-    }
-    setAuthChecked(true);
-  }, [checkAuth]);
+    console.log("Checking authentication...");
+    const verifyAuth = async () => {
+      await checkAuth();
+      console.log("Auth check complete");
+      setAuthChecked(true);
+    };
+    verifyAuth();
+  }, []);
+  
 
   if (isCheckingAuth && !authChecked) return <LoadingSpinner />;
 
@@ -109,54 +79,39 @@ function App() {
 }
 
 function AppContent() {
-  const { isAuthenticated, user } = useAuthStore();
   const location = useLocation();
+  const excludedNavRoutes = ["/AdminDashboard", "/CEOPortal", "/EmployeeDashboard"];
 
   return (
     <>
-      {/* Show Navbar only if not on AdminDashboard or CEOPortal */}
-      {location.pathname !== "/AdminDashboard" && location.pathname !== "/CEOPortal" && location.pathname !== "/EmployeeDashboard" && <Navbar />}
-
+      {!excludedNavRoutes.includes(location.pathname) && <Navbar />}
       <Routes>
-        {/* HomePage */}
         <Route path="/" element={<Homepage />} />
-
-        {/* Authentication Routes */}
-        <Route path="/LoginRouting" element={<RedirectAuthenticatedUser> <LoginRouting /> </RedirectAuthenticatedUser>} />
-        <Route path="/FirstLogin" element={<RedirectAuthenticatedUser> <FirstLogin /> </RedirectAuthenticatedUser>} />
-        <Route path="/EmployeeLogin" element={<RedirectAuthenticatedUser> <EmployeeLogin /> </RedirectAuthenticatedUser>} />
-        <Route path="/EmployeeSignUp" element={<RedirectAuthenticatedUser> <EmployeeSignUp /> </RedirectAuthenticatedUser>} />
-
+        <Route path="/LoginRouting" element={<RedirectAuthenticatedUser><LoginRouting /></RedirectAuthenticatedUser>} />
+        <Route path="/FirstLogin" element={<RedirectAuthenticatedUser><FirstLogin /></RedirectAuthenticatedUser>} />
+        <Route path="/EmployeeLogin" element={<RedirectAuthenticatedUser><EmployeeLogin /></RedirectAuthenticatedUser>} />
+        <Route path="/EmployeeSignUp" element={<RedirectAuthenticatedUser><EmployeeSignUp /></RedirectAuthenticatedUser>} />
         <Route path="/LogoutConfirmation" element={<LogoutConfirmation />} />
         <Route path="/LogoutConfirmationEMP" element={<LogoutConfirmationEMP />} />
         <Route path="/EmailVerification" element={<EmailVerification />} />
-
-        {/* Service Routes */}
         <Route path="/BuilderRouting" element={<BuilderRouting />} />
         <Route path="/PlumberRouting" element={<PlumberRouting />} />
         <Route path="/Electrician" element={<Electrician />} />
         <Route path="/Works" element={<Works />} />
         <Route path="/workers/:category" element={<WorkerList />} />
-
-        {/* Password Recovery Routes */}
         <Route path="/ResetEmailRequest" element={<ResetEmailRequest />} />
         <Route path="/PasswordRecoveryForm/:token" element={<ResetEmailSetup />} />
         <Route path="/EmailConfirmationSuccess" element={<EmailConfirmationSuccess />} />
-
-        {/* Other Routes */}
         <Route path="/CEOPortal" element={<CEOPortal />} />
         <Route path="/LiveProofSection" element={<LiveProofSection />} />
         <Route path="/CarpenterRouting" element={<CarpenterRouting />} />
         <Route path="/EmployeeDashboard" element={<EmployeeDashboard />} />
-
-        {/* Protected Routes */}
         <Route path="/ProfileView" element={<ProtectedRoute><ProfileView /></ProtectedRoute>} />
         <Route path="/TodoList" element={<TodoList />} />
         <Route path="/Yourtasks" element={<Yourtasks />} />
-
-        {/* Admin-Only Routes */}
         <Route path="/AdminDashboard" element={<AdminOnlyRoute><AdminDashboard /></AdminOnlyRoute>} />
       </Routes>
+      <Toaster />
     </>
   );
 }

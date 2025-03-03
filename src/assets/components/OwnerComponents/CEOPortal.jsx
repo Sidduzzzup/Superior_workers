@@ -22,7 +22,7 @@ const CEOPortal = () => {
         <div className="flex justify-between items-center mb-8 overflow-x-hidden">
           <div className="flex items-center space-x-4">
             <img
-              src="/public/mamaand_me.jpg"
+              src="/mamaand_me.jpg"
               alt="CEO"
               className="w-24 h-24 rounded-full object-cover"
             />
@@ -135,10 +135,10 @@ const CEOPortal = () => {
                 ))}
               </div>
               <div>
-                <img  className="rounded-xl mt-10 h-[200px] w-full" src="../../../../public/freedomofnorthkorestatue.jpg" alt="Great freedom of North Korea" />
+                <img  className="rounded-xl mt-10 h-[200px] w-full" src="/public/freedomofnorthkorestatue.jpg" alt="Great freedom of North Korea" />
               </div>
               <div>
-                <img  className="rounded-xl mt-10 h-[250px] border-none w-full" src="../../../../public/WellcomeNorthkOreCart3.jpg" alt="Great freedom of North Korea" />
+                <img  className="rounded-xl mt-10 h-[250px] border-none w-full" src="/WellcomeNorthkOreCart3.jpg" alt="Great freedom of North Korea" />
               </div>
             </div>
 
