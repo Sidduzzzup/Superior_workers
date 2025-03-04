@@ -1,7 +1,7 @@
 import express from 'express';
 import { createcustomer, getcustomer, updatecustomer, deletecustomer,
      signup, verifyEmail ,logout, login, getUserStats,
-     forgotPassword,resetPassword} from '../controllers/CutomerController.js';
+     forgotPassword,resetPassword, updateAddress} from '../controllers/CutomerController.js';
      import { verifyToken } from "../middleware/verifyToken.js";
      import { checkAuth } from "../controllers/CutomerController.js"; 
      import { registerEmployee, loginEmployee, logoutEmployee } from "../controllers/employeeController.js";
@@ -41,6 +41,7 @@ router.delete("/deleteTodo/:id", verifyToken, deleteTodo);
 router.post("/register-employee", registerEmployee);
 router.post("/login-employee", loginEmployee);
 router.post("/logout-employee", logoutEmployee);
+router.put("/update-address", updateAddress);
 
 // router.patch("/tasks/:id", toggleTaskCompletion); // Update task completion status
 

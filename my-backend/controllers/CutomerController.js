@@ -440,3 +440,23 @@ export const getUserStats = async (req, res) => {
       res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
+
+
+export const updateAddress = async (req, res) => {
+  try {
+    const { userId, address } = req.body;
+    if (!userId) return res.status(400).json({ error: "User ID is required" });
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { address },
+      { new: true }
+    );
+
+    if (!updatedUser) return res.status(404).json({ error: "User not found" });
+
+    res.json({ message: "Address updated successfully", user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
