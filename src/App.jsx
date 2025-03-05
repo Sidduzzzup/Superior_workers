@@ -36,6 +36,7 @@ import WorkerList from './assets/components/Final_ordering/WorkerList.jsx';
 import EmployeeLogin from './Employe_Component/EmployeeLogin.jsx';
 import EmployeeSignUp from './Employe_Component/EmployeeSignUp.jsx';
 import LogoutConfirmationEMP from './Employe_Component/LogoutConfirmationEmp.jsx';
+import AddressComponent from './assets/components/AddressComponent.jsx';
 
 const AdminOnlyRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -110,6 +111,7 @@ function AppContent() {
         <Route path="/TodoList" element={<TodoList />} />
         <Route path="/Yourtasks" element={<Yourtasks />} />
         <Route path="/AdminDashboard" element={<AdminOnlyRoute><AdminDashboard /></AdminOnlyRoute>} />
+        <Route path="/AddressComponent" element={<AddressComponent />} />
       </Routes>
       <Toaster />
     </>

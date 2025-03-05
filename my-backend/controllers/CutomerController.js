@@ -18,96 +18,6 @@ import Task from '../models/TasksSchema.js';
 
 
 
-// Sign up
-// export const signup = async (req, res) => {
-//   const { name, phone, email, password } = req.body;
-//   try {
-//     if (!name || !phone || !email || !password) {
-//       throw new Error('Enter All fields are required');
-//     }
-
-//     const userAlreadyExists = await CustomerSchema.findOne({ email });
-//     if (userAlreadyExists) {
-//       return res
-//         .status(400)
-//         .json({ success: false, message: 'This is User already exists Please go to login Page' });
-//     }
-
-//     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
-//     const verificationToken = Math.floor(100000 + Math.random() * 900000).toString(); // Generate a random 6-digit token
-
-//     const user = new CustomerSchema({
-//       name,
-//       phone,
-//       email,
-//       password: hashedPassword,
-//       verificationToken,
-//       verificationExpiresAt: Date.now() + 24 * 60 * 60 * 1000, // Token expiry in 24 hours
-//     });
-
-//     await user.save();
-
-//     generateTokensAndCookies(res, user._id); // Use imported function
-
-//     await sendVerificationEmail(user.email, verificationToken); // Send verification email
-
-//     res.status(201).json({
-//       success: true,
-//       message: 'User created successfully',
-//       user: { ...user._doc, password: undefined }, // Exclude password from response
-//     });
-//   } catch (error) {
-//     res.status(400).json({ success: false, message: error.message });
-//   }
-// };
-
-
-// Updated signup function
-// export const signup = async (req, res) => {
-//   const { name, phone, email, password, isAdmin, passKey } = req.body;
-  
-//   try {
-//     if (!name || !phone || !email || !password) {
-//       throw new Error('All fields are required');
-//     }
-
-//     const userAlreadyExists = await CustomerSchema.findOne({ email });
-//     if (userAlreadyExists) {
-//       return res.status(400).json({ success: false, message: 'User already exists. Please login.' });
-//     }
-
-//     // Check if user is an admin and validate passkey
-//     if (isAdmin && passKey !== process.env.ADMIN_PASSKEY) {
-//       return res.status(400).json({ success: false, message: 'Invalid admin passkey' });
-//     }
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
-
-//     const user = new CustomerSchema({
-//       name,
-//       phone,
-//       email,
-//       password: hashedPassword,
-//       verificationToken,
-//       isAdmin: isAdmin,  // Set the isAdmin flag
-//       verificationExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
-//     });
-
-//     await user.save();
-//     res.status(201).json({
-//       success: true,
-//       message: 'User created successfully',
-//       user: { ...user._doc, password: undefined },
-//     });
-//   } catch (error) {
-//     res.status(400).json({ success: false, message: error.message });
-//   }
-// };
-
-
-
-//verify-email
 
 export const signup = async (req, res) => {
   const { name, phone, email, password, isAdmin, passKey } = req.body;
@@ -246,17 +156,30 @@ export const login = async (req, res) => {
   }
 };
 
+
+
+
 //logout
+
+// export const logout = async (req, res) => {
+//   try {
+//     res.clearCookie('token');
+//     res.status(200).json({ success: true, message: 'Logged out successfully' });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: 'Error logging out', error: error.message });
+//   }
+// };
+
 
 export const logout = async (req, res) => {
   try {
-    res.clearCookie('token');
+    localStorage.removeItem("token"); // Clear the token from localStorage
+    res.clearCookie('token'); // Clear the token cookie (if applicable)
     res.status(200).json({ success: true, message: 'Logged out successfully' });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error logging out', error: error.message });
   }
 };
-
 
 //forgotPassword
 
@@ -447,7 +370,7 @@ export const updateAddress = async (req, res) => {
     const { userId, address } = req.body;
     if (!userId) return res.status(400).json({ error: "User ID is required" });
 
-    const updatedUser = await User.findByIdAndUpdate(
+    const updatedUser = await CustomerSchema.findByIdAndUpdate(
       userId,
       { address },
       { new: true }
@@ -458,5 +381,64 @@ export const updateAddress = async (req, res) => {
     res.json({ message: "Address updated successfully", user: updatedUser });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
+  }
+};
+
+
+// export const getAddress = async (req, res) => {
+//   try {
+//     // Debugging: Log the req.user object to verify its structure
+//     console.log("Request User:", req.user);
+
+//     // Extract the user ID from the request
+//     const userId = req.user.userId; // Access userId directly from req.user
+
+//     if (!userId) {
+//       return handleErrorResponse(res, 401, "Unauthorized: User ID not found in token");
+//     }
+
+//     // Fetch the customer document from the database using the user ID
+//     const customer = await Customer.findById(userId).select("address");
+
+//     // If no customer is found, return a 404 response
+//     if (!customer) {
+//       return handleErrorResponse(res, 404, "Customer not found");
+//     }
+
+//     // Extract the address from the customer document
+//     const address = customer.address;
+
+//     // If no address is found, return a 404 response
+//     if (!address) {
+//       return handleErrorResponse(res, 404, "Address not found for the customer");
+//     }
+
+//     // Return the address data in the response
+//     handleSuccessResponse(res, 200, "Address fetched successfully", address);
+//   } catch (error) {
+//     console.error("Error fetching address:", error);
+//     handleErrorResponse(res, 500, "Failed to fetch address");
+//   }
+// };
+export const getAddress = async (req, res) => {
+  try {
+    console.log("Request User:", req.user);  // ✅ Check if user exists
+
+    const userId = req.user?.userId;
+
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized: User ID missing from token" });
+    }
+
+    const customer = await CustomerSchema.findById(userId).select("address");
+
+    if (!customer || !customer.address) {
+      return res.status(404).json({ error: "Address not found" });
+    }
+
+    res.status(200).json({ message: "Address fetched successfully", address: customer.address });
+  } catch (error) {
+    console.error("Error fetching address:", error);
+    res.status(500).json({ error: "Failed to fetch address" });
   }
 };

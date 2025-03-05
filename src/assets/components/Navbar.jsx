@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { ListItemButton } from "@mui/material";
+
 import { styled, alpha } from '@mui/material/styles';
 import {
   AppBar,
@@ -96,25 +98,44 @@ export default function Navbar() {
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}><Link to="/">Home</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to="/ProfileView">Profile</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to="/LoginRouting">My Account</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to="/FirstLogin">Log In</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to="/LogoutConfirmation">Log Out</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to="/">Your Orders</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to="/TodoList">Add Tasks</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to="/Yourtasks">Your Task</Link></MenuItem>
-      <MenuItem onClick={handleMenuClose}><Link to="/Yourtasks">Employee</Link></MenuItem>
-    </Menu>
+<Menu
+  anchorEl={anchorEl}
+  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+  id={menuId}
+  keepMounted
+  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+  open={isMenuOpen}
+  onClose={handleMenuClose}
+  sx={{ fontFamily: 'Bebas Neue, sans-serif' }} // Apply font to entire Menu
+>
+  {[
+    { text: 'Home', path: '/' },
+    { text: 'Profile', path: '/ProfileView' },
+    { text: 'My Account', path: '/LoginRouting' },
+    { text: 'Log In', path: '/FirstLogin' },
+    { text: 'Log Out', path: '/LogoutConfirmation' },
+    { text: 'Your Orders', path: '/' },
+    { text: 'Add Tasks', path: '/TodoList' },
+    { text: 'Your Task', path: '/Yourtasks' },
+    { text: 'Employee', path: '/Yourtasks' },
+  ].map(({ text, path }) => (
+    <MenuItem key={text} onClick={handleMenuClose}>
+      <Link
+        to={path}
+        style={{
+          textDecoration: 'none',
+          color: 'black',
+          fontFamily: 'Bebas Neue, sans-serif', // Apply font to links
+          fontSize: '18px',
+          letterSpacing: '1px',
+        }}
+      >
+        {text}
+      </Link>
+    </MenuItem>
+  ))}
+</Menu>
+
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -145,7 +166,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , fontFamily: 'Bebas Neue, sans-serif', fontSize: '23px'} }}>
             <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Home</Link>
             <Link to="/ProfileView" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Profile</Link>
             <Link to="/Yourtasks" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Your Task</Link>
@@ -199,36 +220,54 @@ export default function Navbar() {
     },
   }}
 >
-  <List>
-    {[
-      { text: 'Home', path: '/' },
-      { text: 'Profile', path: '/ProfileView' },
-      { text: 'Your Task', path: '/Yourtasks' },
-      { text: 'Your Orders', path: '/' },
-      { text: 'Contact Us', path: '/' },
-      { text: 'Log In', path: '/FirstLogin' },
-      { text: 'Log Out', path: '/LogoutConfirmation' }
-    ].map(({ text, path }) => (
-      <ListItem button key={text} onClick={() => setMobileMenuOpen(false)}>
+
+
+
+<List>
+  {[
+    { text: "Home", path: "/" },
+    { text: "Profile", path: "/ProfileView" },
+    { text: "Your Task", path: "/Yourtasks" },
+    { text: "Your Orders", path: "/" },
+    { text: "Contact Us", path: "/" },
+    { text: "Log In", path: "/FirstLogin" },
+    { text: "Log Out", path: "/LogoutConfirmation" },
+  ].map(({ text, path }) => (
+    <ListItem key={text} disablePadding>
+      <ListItemButton onClick={() => setMobileMenuOpen(false)}>
         <Link
           to={path}
           style={{
-            textDecoration: 'none',
-            color: 'white', // Default text color
-            fontWeight: 'bold', // Make text bold
-            width: '100%',
-            padding: '10px 20px',
-            display: 'block',
-            transition: 'color 0.3s ease',
+            textDecoration: "none",
+            width: "100%",
+            display: "block",
           }}
-          onMouseEnter={(e) => (e.target.style.color = 'gray')} // Turn gray on hover
-          onMouseLeave={(e) => (e.target.style.color = 'white')} // Revert to white
         >
-          <ListItemText primary={text} />
+          <ListItemText
+            primary={
+              <Typography
+                sx={{
+                  fontFamily: "Bebas Neue, sans-serif", // ✅ Ensures font is applied
+                  fontSize: "20px",
+                  fontWeight: "semiBold",
+                  
+                  transition: "color 0.3s ease",
+                  "&:hover": { color: "gray" },
+                }}
+              >
+                {text}
+              </Typography>
+            }
+          />
         </Link>
-      </ListItem>
-    ))}
-  </List>
+      </ListItemButton>
+    </ListItem>
+  ))}
+</List>
+
+
+
+
 </Drawer>
 
 
