@@ -89,7 +89,7 @@ const ProfileView = ({ address, onSave }) => {
     console.log("Submitting form data:", formData);
 
     try {
-      const response = await fetch("http://localhost:3000/customers/update-address", {
+      const response = await fetch("https://superior-workers-backend.onrender.com/customers/update-address", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -129,7 +129,7 @@ useEffect(() => {
               return;
           }
 
-          const response = await fetch("http://localhost:3000/customers/get-address", {
+          const response = await fetch("https://superior-workers-backend.onrender.com/customers/get-address", {
               method: "GET",
               headers: {
                   Authorization: `Bearer ${token}`, // Include token

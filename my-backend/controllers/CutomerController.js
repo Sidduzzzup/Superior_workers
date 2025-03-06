@@ -116,45 +116,43 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // ✅ Find user by email
     const user = await CustomerSchema.findOne({ email });
 
     if (!user) {
       return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
 
-    // ✅ Compare password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
 
-    // ✅ Generate JWT Token & Set Cookie
     const token = generateTokensAndCookies(res, user._id);
 
-    // ✅ Update last login time
     user.lastLogin = new Date();
     await user.save();
 
-    // ✅ Send response with user info & token
+    console.log("🔹 Generated Token:", token); // Debugging
+
     res.status(200).json({
       success: true,
       message: "Logged in successfully",
-      token,  // ✅ Include token in response
+      token,  // ✅ Ensure token is included
       user: {
         _id: user._id,
         name: user.name,
         email: user.email,
-        isAdmin: user.isAdmin, // ✅ Ensure isAdmin is always present
+        isAdmin: user.isAdmin, 
         lastLogin: user.lastLogin,
       },
     });
 
   } catch (error) {
-    console.error("Error in login:", error);
+    console.error("🔴 Error in login:", error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
 
 
 
