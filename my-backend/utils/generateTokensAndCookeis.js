@@ -88,3 +88,5 @@ export const generateTokensAndCookies = (res, userId) => {
 
     return token; // Ensure token is returned correctly
 };
+
+export default generateTokensAndCookies;
