@@ -24,6 +24,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
+import { useAuthStore } from './store/authStore';
+import LogoutConfirmation from './Routing-Component/LogoutConfirmation';
+
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -65,6 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+    const { user, isAuthenticated, logout } = useAuthStore();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -172,8 +177,8 @@ export default function Navbar() {
             <Link to="/Yourtasks" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Your Task</Link>
             <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Your Orders</Link>
             <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Contact Us</Link>
-            <Link to="/FirstLogin" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Log In</Link>
-            <Link to="/LogoutConfirmation" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Log Out</Link>    
+            {/* <Link to="/FirstLogin" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Log In</Link>
+            <Link to="/LogoutConfirmation" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Log Out</Link>     */}
             <Link to="/EmployeeLogin" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Employee</Link>   
         </Box>
 

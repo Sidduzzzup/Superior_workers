@@ -198,13 +198,19 @@ useEffect(() => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4 sm:p-8">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="relative h-48 bg-gradient-to-r from-blue-400 to-purple-500">
-          <button
-            onClick={logout}
-            className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm p-2 rounded-full hover:bg-white/30"
-            aria-label="Logout"
-          >
-            Logout
-          </button>
+              <button
+        onClick={() => {
+          console.log("Logout button clicked!");
+          logout();
+          navigate("/LogoutConfirmation");
+        }}
+        className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm p-2 rounded-full hover:bg-white/30"
+        aria-label="Logout"
+      >
+        Logout
+      </button>
+
+
           <Link to="/">
             <button className="absolute top-4 right-24 bg-white/20 backdrop-blur-sm p-2 rounded-full hover:bg-white/30">
               Home

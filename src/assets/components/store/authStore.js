@@ -53,63 +53,6 @@ export const useAuthStore = create((set) => ({
         }
     },
 
-    // login: async (email, password) => {
-    //     set({ isLoading: true, error: null });
-    //     try {
-    //         const response = await axios.post(`${API_URL}/login`, { email, password });
-    //         const { token, user } = response.data;
-
-    //         // Save token in localStorage
-    //         localStorage.setItem("authToken", token);
-
-    //         if (token) {
-    //             localStorage.setItem("authToken", token);
-    //         } else {
-    //             console.error("No token received from API");
-    //         }
-
-    //         set({
-    //             isAuthenticated: true,
-    //             user: user,
-    //             error: null,
-    //             isLoading: false,
-    //         });
-
-    //         // Redirect based on role
-    //         if (user.isAdmin) {
-    //             window.location.href = "/AdminDashboard"; // Redirect Admins
-    //         } else {
-    //             window.location.href = "/"; // Redirect Regular Users to Home
-    //         }
-    //     } catch (error) {
-    //         set({ error: error.response?.data?.message || "Error logging in", isLoading: false });
-    //         throw error;
-    //     }
-    // },
-
-    // checkAuth: async () => {
-    //     set({ isCheckingAuth: true, error: null });
-    //     try {
-    //         const token = localStorage.getItem("authToken"); // Get token from localStorage
-    //         if (!token) throw new Error("No token found");
-
-    //         const response = await axios.get(`${API_URL}/check-auth`, {
-    //             headers: { Authorization: `Bearer ${token}` }, // Attach token in Authorization header
-    //         });
-
-    //         set({
-    //             user: response.data.user,
-    //             isAuthenticated: true,
-    //             isCheckingAuth: false
-    //         });
-    //     } catch (error) {
-    //         console.error("Auth check failed:", error);
-    //         set({ error: null, isCheckingAuth: false, isAuthenticated: false });
-    //         localStorage.removeItem("authToken"); // Clear token if authentication fails
-    //     }
-    // },
-
-
 
 
     login: async (email, password) => {
@@ -147,33 +90,6 @@ export const useAuthStore = create((set) => ({
     },
     
 
-
-    
-    // checkAuth: async () => {
-    //     set({ isCheckingAuth: true, error: null });
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         console.log("Retrieved token:", token); // Debugging step
-    
-    //         if (!token) throw new Error("No token found");
-    
-    //         const response = await axios.get(`${API_URL}/check-auth`, {
-    //             headers: { Authorization: `Bearer ${token}` },
-    //         });
-    
-    //         console.log("User authenticated:", response.data.user); // Debugging step
-    
-    //         set({
-    //             user: response.data.user,
-    //             isAuthenticated: true,
-    //             isCheckingAuth: false
-    //         });
-    //     } catch (error) {
-    //         console.error("Auth check failed:", error);
-    //         set({ error: null, isCheckingAuth: false, isAuthenticated: false });
-    //         localStorage.removeItem("authToken");
-    //     }
-    // },
     
     checkAuth: async () => {
         set({ isCheckingAuth: true, error: null });
@@ -210,22 +126,48 @@ export const useAuthStore = create((set) => ({
         }
     },
     
+   
+      
 
 
 
 
+
+    // logout: async () => {
+    //     set({ isLoading: true, error: null });
+    //     try {
+    //         await axios.post(`${API_URL}/logout`);
+    //         localStorage.removeItem("authToken"); // Remove token from localStorage
+    //         set({ user: null, isAuthenticated: false, isLoading: false, error: null });
+    //     } catch (error) {
+    //         set({ error: "Error logging out", isLoading: false });
+    //         throw error;
+    //     }
+    // },
 
     logout: async () => {
-        set({ isLoading: true, error: null });
         try {
-            await axios.post(`${API_URL}/logout`);
-            localStorage.removeItem("authToken"); // Remove token from localStorage
-            set({ user: null, isAuthenticated: false, isLoading: false, error: null });
+          await axios.post(`${API_URL}/logout`, {}, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          });
         } catch (error) {
-            set({ error: "Error logging out", isLoading: false });
-            throw error;
+          console.warn("Logout request failed, clearing token locally.");
+        } finally {
+          localStorage.removeItem("authToken"); // Clear token locally
+          set({ user: null, isAuthenticated: false, isLoading: false, error: null });
+          if (!window.hasLoggedOut) {
+              alert("You have been logged out successfully.");
+              window.hasLoggedOut = true; // Set a flag to prevent multiple alerts
+          }
+        //await new Promise((resolve) => setTimeout(resolve, 10000)); // Delay of 5 seconds
+         // window.location.href = "/FirstLogin"; // Redirect to login
         }
-    },
+      },
+      
+
+    
 
     forgotPassword: async (email) => {
         set({ isLoading: true, error: null });
