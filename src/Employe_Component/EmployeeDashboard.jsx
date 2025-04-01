@@ -42,7 +42,7 @@ const EmployeeDashboard = () => {
   // Fetch orders from backend
   const fetchOrders = async () => {
     try {
-      const response = await fetch("http://localhost:3000/customers/getOrders", {
+      const response = await fetch("https://superior-workers-backend.onrender.com/customers/getOrders", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -119,10 +119,10 @@ const EmployeeDashboard = () => {
         <nav className="sticky top-0 z-50 bg-card shadow-sm p-4">
           <div className="container mx-auto flex items-center justify-between">
             <div className="flex items-center space-x-4">
-          <img
-            src="https://images.unsplash.com/photo-1563694983011-6f4d90358083?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8bG9nb3x8fHx8fDE3MDg2NzQwMzA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=100"
+                   <img
+            src="/istockphoto-168362728-612x612.png"
             alt="Company Logo"
-            className="h-8"
+            style={{ height: '60px', width: '90px' }}
           />
           <div className="hidden md:flex space-x-4">
             <button className="text-foreground hover:text-primary flex items-center gap-2">

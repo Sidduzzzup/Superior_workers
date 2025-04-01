@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { jwtDecode } from "jwt-decode";
 
-const API_URL = "http://localhost:3000/customers"; // Update with actual API URL
+const API_URL = "https://superior-workers-backend.onrender.com/customers"; // Update with actual API URL
 
 // Check if token is expired before making API requests
 const isTokenExpired = (token) => {
