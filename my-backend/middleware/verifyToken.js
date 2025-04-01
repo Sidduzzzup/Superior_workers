@@ -1,4 +1,7 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 export const verifyToken = (req, res, next) => {
   // ✅ Extract token from Authorization header
@@ -10,6 +13,8 @@ export const verifyToken = (req, res, next) => {
   }
 
   const token = authHeader.split(" ")[1];
+ 
+  console.log("🔍 Token Length Check:", token.length);
   console.log("✅ Extracted Token:", token);
 
   if (!process.env.JWT_SECRET) {
@@ -22,12 +27,17 @@ export const verifyToken = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log("✅ Decoded Token Payload:", decoded);
 
+
+    console.log("🔎 JWT Secret:", process.env.JWT_SECRET);
+    console.log("🔎 Decoded Token:", decoded);
+
+
     // ✅ Attach decoded data to request
     req.user = {
-      userId: decoded.id || decoded.userId,
+      userId: decoded.userId,
       isAdmin: decoded.isAdmin || false,
     };
-
+    
     console.log("✅ User ID from Token:", req.user.userId);
     next();
   } catch (error) {

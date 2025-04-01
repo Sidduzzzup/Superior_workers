@@ -30,7 +30,7 @@ export const useAuthStoreTodo = create((set) => ({
       console.warn("🔴 Token expired. Redirecting to login...");
       alert("Session expired. Please log in again.");
       localStorage.removeItem("authToken");
-      window.location.href = "/login"; // Redirect to login
+      window.location.href = "/FirstLogin"; // Redirect to login
       return;
     }
 
@@ -65,7 +65,7 @@ export const useAuthStoreTodo = create((set) => ({
       if (!token || isTokenExpired(token)) {
         alert("Session expired. Please log in again.");
         localStorage.removeItem("authToken");
-        window.location.href = "/login";
+        window.location.href = "/FirstLogin"; // Redirect to login
         return;
       }
 
@@ -98,7 +98,7 @@ export const useAuthStoreTodo = create((set) => ({
       if (!token || isTokenExpired(token)) {
         alert("Session expired. Please log in again.");
         localStorage.removeItem("authToken");
-        window.location.href = "/login";
+        window.location.href = "/FirstLogin";
         return;
       }
 

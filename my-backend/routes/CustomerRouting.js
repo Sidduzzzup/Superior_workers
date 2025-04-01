@@ -22,6 +22,8 @@ import { createcustomer,
           deleteTodo,
           // toggleTaskCompletion,
         } from '../controllers/ToDoController.js';
+
+import { createOrder, getOrders } from "../controllers/OrderController.js"; // Import the Order model
 const router = express.Router();
 
 router.get("/profile", async (req, res) => {
@@ -53,6 +55,11 @@ router.post("/login-employee", loginEmployee);
 router.post("/logout-employee", logoutEmployee);
 router.put("/update-address", updateAddress);
 router.get("/get-address",verifyToken, getAddress);
+router.post("/createOrder", verifyToken, createOrder);
+router.get("/getOrders", verifyToken, getOrders);
+// router.get("/todos", getTodos); // Get all todos
+
+
 
 // router.patch("/tasks/:id", toggleTaskCompletion); // Update task completion status
 

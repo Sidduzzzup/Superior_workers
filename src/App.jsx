@@ -59,15 +59,25 @@ function App() {
   const { isCheckingAuth, checkAuth } = useAuthStore();
   const [authChecked, setAuthChecked] = useState(false);
 
+  
+
+
   useEffect(() => {
-    console.log("Checking authentication...");
-    const verifyAuth = async () => {
-      await checkAuth();
-      console.log("Auth check complete");
-      setAuthChecked(true);
-    };
-    verifyAuth();
-  }, []);
+    if (!authChecked) {
+      console.log("Checking authentication...");
+      const verifyAuth = async () => {
+        try {
+          await checkAuth(); // ✅ Only check auth if not already checked
+          console.log("Auth check complete");
+          setAuthChecked(true); // Set to true to prevent multiple runs
+        } catch (error) {
+          console.error("Error verifying authentication:", error);
+        }
+      };
+      verifyAuth();
+    }
+  }, [authChecked]); // ✅ Add authChecked as a dependency
+  
   
 
   if (isCheckingAuth && !authChecked) return <LoadingSpinner />;

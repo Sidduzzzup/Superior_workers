@@ -15,11 +15,12 @@ const LogoutConfirmation = () => {
   const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
 
   useEffect(() => {
-    
+    if (user) {
+      logout();
+    }
     document.title = "Successfully Logged Out";
-    logout();
   }, []);
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center p-4">
       <motion.div

@@ -92,58 +92,37 @@ export const useAuthStore = create((set) => ({
 
     
     checkAuth: async () => {
-        set({ isCheckingAuth: true, error: null });
+        console.log("Starting checkAuth");
+        const token = localStorage.getItem("authToken");
+        console.log("Retrieved token:", token);
+    
+        if (!token) {
+          console.warn("No token found, setting unauthenticated state");
+          set({ isAuthenticated: false, isCheckingAuth: false, user: null });
+          return;
+        }
     
         try {
-            setTimeout(() => {
-                const token = localStorage.getItem("authToken");
-                console.log("Retrieved token after delay:", token); // Debugging step
-            }, 0);  // Small delay to check if token is still there
+          set({ isCheckingAuth: true }); // Single state update before request
+          const response = await axios.get(`${API_URL}/check-auth`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          console.log("CheckAuth response:", response.data);
     
-            const token = localStorage.getItem("authToken");
-            if (!token) {
-                console.warn("No token found, redirecting to login...");
-                set({ isAuthenticated: false, isCheckingAuth: false });
-                return;
-            }
-    
-            const response = await axios.get(`${API_URL}/check-auth`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-    
-            console.log("User authenticated:", response.data.user);
-    
-            set({
-                user: response.data.user,
-                isAuthenticated: true,
-                isCheckingAuth: false
-            });
-    
+          set({
+            user: response.data.user,
+            isAuthenticated: true,
+            isCheckingAuth: false,
+          });
         } catch (error) {
-            console.error("Auth check failed:", error);
-            localStorage.removeItem("authToken"); // Remove invalid token
-            set({ isAuthenticated: false, isCheckingAuth: false });
+          console.error("Auth check failed:", error.response?.data || error.message);
+          localStorage.removeItem("authToken");
+          set({ isAuthenticated: false, isCheckingAuth: false, user: null });
         }
-    },
+      },
     
    
       
-
-
-
-
-
-    // logout: async () => {
-    //     set({ isLoading: true, error: null });
-    //     try {
-    //         await axios.post(`${API_URL}/logout`);
-    //         localStorage.removeItem("authToken"); // Remove token from localStorage
-    //         set({ user: null, isAuthenticated: false, isLoading: false, error: null });
-    //     } catch (error) {
-    //         set({ error: "Error logging out", isLoading: false });
-    //         throw error;
-    //     }
-    // },
 
     logout: async () => {
         try {

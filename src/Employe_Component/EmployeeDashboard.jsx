@@ -1,69 +1,121 @@
 import React, { useState, useEffect } from "react";
-import { FiBell, FiMap, FiUser, FiLogOut, FiHome, FiClipboard, FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-
-const orders = [
-  {
-    id: 1,
-    name: "John Smith",
-    service: "Plumbing Repair",
-    address: "123 Main St, Boston, MA",
-    status: "pending",
-    distance: "2.5 km",
-    estimatedTime: "15 mins"
-  },
-  {
-    id: 2,
-    name: "Emma Wilson",
-    service: "Electrical Work",
-    address: "456 Oak Ave, Boston, MA",
-    status: "pending",
-    distance: "3.8 km",
-    estimatedTime: "22 mins"
-  },
-  {
-    id: 3,
-    name: "Michael Brown",
-    service: "HVAC Service",
-    address: "789 Pine Rd, Boston, MA",
-    status: "pending",
-    distance: "1.2 km",
-    estimatedTime: "8 mins"
-  }
-];
+import { FiClipboard, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { toast } from "react-hot-toast";
+import Navbar from "../assets/components/Navbar";
+import { FiBell, FiMap, FiUser, FiLogOut, FiHome} from "react-icons/fi";
 
 const EmployeeDashboard = () => {
-  const navigate = useNavigate(); // Use the hook
-  const [isAvailable, setIsAvailable] = useState(true);
-  const [activeOrders, setActiveOrders] = useState(orders);
-  const [completedOrders, setCompletedOrders] = useState([]);
+ 
+  const navigate = useNavigate();
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [sessionExpired, setSessionExpired] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  // Debounced search hook
+  const useDebouncedSearch = (value, delay) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [value, delay]);
+
+    return debouncedValue;
+  };
+
+  const debouncedSearchTerm = useDebouncedSearch(searchTerm, 500);
+
+  useEffect(() => {
+    handleSearch(debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
+
+  // Fetch orders from backend
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/customers/getOrders", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      });
+  
+      if (!response.ok) {
+        if (response.status === 401) {
+          setSessionExpired(true);
+          localStorage.removeItem("authToken");
+          navigate("/EmployeeLogin");
+        }
+        throw new Error("Failed to fetch orders");
+      }
+  
+      const data = await response.json();
+      console.log("Fetched Orders:", data); // Debugging fetched data
+  
+      if (data.success && Array.isArray(data.orders)) {
+        setOrders(data.orders); // Access the orders array inside the response
+        setFilteredOrders(data.orders); // Set filtered orders initially
+      } else {
+        console.error("Data format is incorrect");
+        toast.error("Failed to load orders. Invalid data format.");
+      }
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      toast.error("Failed to load orders. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      setSessionExpired(true);
+      navigate("/EmployeeLogin");
+      return;
+    }
+    fetchOrders();
+  }, [navigate]);
+
+  // Handle search logic
+  const handleSearch = (searchTerm) => {
+    console.log("Searching for:", searchTerm); // Debugging search term
+    const filtered = orders.filter(
+      (order) =>
+        order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.service.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredOrders(filtered);
+    console.log("Filtered Orders:", filtered); // Debugging filtered orders
+  };
 
   const handleAccept = (order) => {
-    setActiveOrders(activeOrders.filter((o) => o.id !== order.id));
     setSelectedOrder(order);
+    setFilteredOrders(filteredOrders.filter((o) => o.id !== order.id));
+    console.log(`Accepted order with ID: ${order.id}`);
   };
 
   const handleDecline = (order) => {
-    setActiveOrders(activeOrders.filter((o) => o.id !== order.id));
+    setFilteredOrders(filteredOrders.filter((o) => o.id !== order.id));
+    console.log(`Declined order with ID: ${order.id}`);
   };
-
-  const filteredOrders = activeOrders.filter(
-    (order) =>
-      order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.service.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-
-   
-
-
 
   return (
     <div className="min-h-screen bg-background">
-     { /* Navbar */}
+       <Navbar />;
+
+      
+       { /* Navbar */}
         <nav className="sticky top-0 z-50 bg-card shadow-sm p-4">
           <div className="container mx-auto flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -114,32 +166,15 @@ const EmployeeDashboard = () => {
           </div>
         </nav>
 
-        <div className="container mx-auto px-4 py-8">
-          {/* Profile Section */}
-        <div className="bg-card rounded-lg p-6 mb-8 shadow-sm">
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            <img
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cHJvZmlsZXx8fHx8fDE3MDg2NzQwMzE&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=150"
-              alt="Employee Profile"
-              className="w-32 h-32 rounded-full"
-            />
-            <div className="text-center md:text-left">
-              <h2 className="text-2xl font-bold text-foreground">David Mitchell</h2>
-              <p className="text-accent">Senior Technician</p>
-              <p className="text-accent">Age: 32 | Experience: 8 years</p>
-              <div className="mt-4">
-                <button
-                  onClick={() => setIsAvailable(!isAvailable)}
-                  className={`px-4 py-2 rounded-md ${isAvailable ? "bg-chart-2 text-white" : "bg-destructive text-white"}`}
-                >
-                  {isAvailable ? "Available" : "Busy"}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Search and Orders Section */}
+
+
+      {sessionExpired && (
+        <div className="bg-destructive text-white text-center p-4">
+          Your session has expired. Please log in again.
+        </div>
+      )}
+      <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <input
             type="text"
@@ -150,58 +185,102 @@ const EmployeeDashboard = () => {
           />
         </div>
 
-        {/* Orders Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredOrders.length > 0 ? (
-            filteredOrders.map((order) => (
+          {isLoading ? (
+            <p>Loading orders...</p>
+          ) : 
+          
+          filteredOrders.length > 0 ? (
+
+
+                                      filteredOrders.map((order) => (
               <div key={order.id} className="bg-card rounded-lg p-6 shadow-sm">
-                <h3 className="text-lg font-semibold text-foreground">{order.name}</h3>
-                <p className="text-accent mb-2">{order.service}</p>
-                <p className="text-accent mb-4">{order.address}</p>
+                <h3 className="text-2xl mb-2 font-semibold text-foreground ">{order.name}</h3>
+                <p className="text-black mb-1 ">Service: <b>{order.service}</b></p>
+                <p className="text-black mb-1">Phone: <b>Hidden for Security reasons</b></p>
+                <p className="text-black mb-1">Time Availability: <b>{order.timeAvailability || "Not specified"}</b></p>
+                <p className="text-black mb-1">Status: <b>{order.status}</b></p>
+                <p className="text-black mb-1">Distance: <b>{order.distance}</b></p>
+                <p className="text-black mb-4">Estimated Time:<b>{order.estimatedTime} </b></p>
+                
                 <div className="flex justify-between gap-4">
                   <button
                     onClick={() => handleAccept(order)}
-                    className="flex-1 bg-chart-2 text-white py-2 rounded-md hover:opacity-90 transition-opacity"
+                    className="flex-1 bg-green-400 text-black py-2 rounded-md hover:opacity-90 transition-opacity flex items-center justify-center font-bold"
                   >
+                    <FiCheckCircle className="mr-2" style={{ height: '15px', width: '15px' }} />
                     Accept
                   </button>
                   <button
                     onClick={() => handleDecline(order)}
-                    className="flex-1 bg-muted text-accent py-2 rounded-md hover:opacity-90 transition-opacity"
+                    className="flex-1 bg-red-500 text-black py-2 rounded-md hover:opacity-90 transition-opacity flex items-center justify-center font-bold"
                   >
+                    <FiXCircle className="mr-2" style={{ height: '15px', width: '15px' }} />
                     Decline
                   </button>
                 </div>
               </div>
             ))
-          ) : (
+          )
+
+
+           : (
             <div className="col-span-full text-center py-8">
               <p className="text-accent">No new job requests. Please check again later.</p>
             </div>
           )}
         </div>
 
-        {/* Map Section */}
-        {selectedOrder && (
-          <div className="mt-8 bg-card rounded-lg p-6 shadow-sm">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Navigation</h3>
-            <div className="bg-muted h-64 rounded-md flex items-center justify-center mb-4">
-              <FiMap className="text-4xl text-accent" />
-            </div>
-            <div className="flex justify-between items-center">
-              <div>
-                <p className="text-accent">Distance: {selectedOrder.distance}</p>
-                <p className="text-accent">Est. Time: {selectedOrder.estimatedTime}</p>
-              </div>
-              <button className="bg-primary text-white px-6 py-2 rounded-md hover:opacity-90 transition-opacity">
-                Navigate
-              </button>
-            </div>
-          </div>
-        )}
+            {selectedOrder && (
+      <div className="mt-8 w-full p-6 bg-card rounded-lg shadow-sm">
+        <h3 className="text-xl font-semibold mb-4">Order Details</h3>
+        <p className="text-accent mb-1"><strong>Name:</strong> {selectedOrder.name}</p>
+        <p className="text-accent mb-1"><strong>Service:</strong> {selectedOrder.service}</p>
+        <p className="text-accent mb-1"><strong>Phone:</strong> {selectedOrder.phone || "Not provided"}</p>
+        <p className="text-accent mb-1"><strong>Time Availability:</strong> {selectedOrder.timeAvailability || "Not specified"}</p>
+        <p className="text-accent mb-1"><strong>Status:</strong> {selectedOrder.status}</p>
+        <p className="text-accent mb-1"><strong>Distance:</strong> {selectedOrder.distance}</p>
+        <p className="text-accent mb-4"><strong>Estimated Time:</strong> {selectedOrder.estimatedTime}</p>
+
+        <h3 className="text-xl font-semibold mt-6">Order Location</h3>
+        <iframe
+          width="100%"
+          height="300px"
+          frameBorder="0"
+          style={{ border: 0 }}
+          src={`https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
+            selectedOrder.address
+          )}&key=YOUR_GOOGLE_MAPS_API_KEY`}
+          allowFullScreen
+        ></iframe>
+      </div>
+    )}
       </div>
     </div>
   );
 };
 
 export default EmployeeDashboard;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -27,19 +27,32 @@ const EmployeeLogin = () => {
       setErrorMessage("Email and Password are required");
       return;
     }
-
+  
     setIsLoading(true);
     setErrorMessage("");
     setSuccessMessage("");
-
+  
     try {
       const response = await axios.post(
-        "https://superior-workers-backend.onrender.com/customers/login-employee",
+        "http://localhost:3000/customers/login-employee",
         { email, password }
       );
-      
+  
       console.log("Login response:", response.data);
+      
+      // Store the token in localStorage
+      if (response.data.token) {
+        localStorage.setItem("authToken", response.data.token);
+        console.log("Token stored:", response.data.token);
+      } else {
+        console.error("Token not found in response");
+      }
+
+  
+  
       setSuccessMessage("Login successful! Redirecting...");
+      console.log("Stored Token Before Redirect:", localStorage.getItem("authToken"));
+
       setTimeout(() => navigate("/EmployeeDashboard"), 3000);
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "Login failed! Invalid credentials.");
@@ -47,6 +60,7 @@ const EmployeeLogin = () => {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center p-4 sm:p-6">
