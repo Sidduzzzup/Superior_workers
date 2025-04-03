@@ -86,7 +86,7 @@ export default function FirstLogin() {
             <Link to="/forgot-password" className="text-sm font-mono text-gray-900 dark:text-gray-100 hover:underline">
               Forgot Password?
             </Link>
-            <Link to="/register" className="text-sm font-mono text-gray-900 dark:text-gray-100 hover:underline">
+            <Link to="/LoginRouting" className="text-sm font-mono text-gray-900 dark:text-gray-100 hover:underline">
               Don't have an account? Sign up
             </Link>
           </div>

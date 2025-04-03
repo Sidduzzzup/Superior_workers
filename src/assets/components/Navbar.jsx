@@ -119,6 +119,7 @@ export default function Navbar() {
     { text: 'My Account', path: '/LoginRouting' },
     { text: 'Log In', path: '/FirstLogin' },
     { text: 'Log Out', path: '/LogoutConfirmation' },
+    { text: 'Payment', path: '/PaymentGateway' },
     { text: 'Your Orders', path: '/' },
     { text: 'Add Tasks', path: '/TodoList' },
     { text: 'Your Task', path: '/Yourtasks' },
