@@ -48,7 +48,7 @@ const Homepage = () => {
        initial={{ opacity: 0, x: -200 }}
        animate={{ opacity: 1, x: 0 }}
        transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
-       className=' text-sky-500  font-bold md:font-semibold font-archivo pl-3 pt-4 text-3xl sm:text-2xl md:text-3xl lg:text-5xl '>
+       className=' text-sky-500  font-special pl-3 pt-4 text-2xl sm:text-2xl md:text-3xl lg:text-5xl '>
          Get Repair in One Click
       </motion.h1>
 
@@ -57,7 +57,7 @@ const Homepage = () => {
        initial={{ opacity: 0, x: -200 }}
        animate={{ opacity: 1, x: 0 }}
        transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
-       className='font-mono text-gray-600 p-4 pt-5 text-sm sm:text-sm md:text-base lg:text-lg'>
+       className='font-helvetica text-lg text-gray-500 p-4 pt-5 sm:text-sm md:text-lg'>
         
       Welcome to the ultimate solution for all your home repair needs. Whether it's an electrician, plumber, 
       carpenter, builder, or any other professional, we've got you covered. With just one click, book trusted and skilled workers

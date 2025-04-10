@@ -38,6 +38,7 @@ import EmployeeSignUp from './Employe_Component/EmployeeSignUp.jsx';
 import LogoutConfirmationEMP from './Employe_Component/LogoutConfirmationEmp.jsx';
 import AddressComponent from './assets/components/AddressComponent.jsx';
 import PaymentGateway from './assets/components/PaymentGateway/PaymentGateway.jsx';
+import YourOrders from './assets/components/YourOrders.jsx';
 
 const AdminOnlyRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -125,6 +126,7 @@ function AppContent() {
         <Route path="/AddressComponent" element={<AddressComponent />} />
         <Route path="/PaymentGateway" element={<PaymentGateway />} />
         <Route path="/EmployeeDashboard" element={<EmployeeDashboard />} />
+        <Route path="/YourOrders" element={<YourOrders />} />
       </Routes>
       <Toaster />
     </>

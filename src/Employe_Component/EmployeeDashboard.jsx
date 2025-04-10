@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FiClipboard, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { useNavigate, useLocation } from "react-router-dom";
+import { FiClipboard, FiCheckCircle, FiXCircle, FiBell, FiMap, FiUser, FiLogOut, FiHome } from "react-icons/fi";
 import { toast } from "react-hot-toast";
 import Navbar from "../assets/components/Navbar";
-import { FiBell, FiMap, FiUser, FiLogOut, FiHome} from "react-icons/fi";
+import { useAuthStoreOrder } from "../assets/components/store/authStoreOrder"; // Fixed hook name import
+
+
 
 const EmployeeDashboard = () => {
- 
   const navigate = useNavigate();
-  const [orders, setOrders] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [sessionExpired, setSessionExpired] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const { orders, isLoading, getOrders } = useAuthStoreOrder();
 
   // Debounced search hook
   const useDebouncedSearch = (value, delay) => {
@@ -33,71 +34,44 @@ const EmployeeDashboard = () => {
     return debouncedValue;
   };
 
+
+const handleGoToDashboard = () => {
+  navigate("/EmployeeDashboard");
+};
+
+
   const debouncedSearchTerm = useDebouncedSearch(searchTerm, 500);
 
   useEffect(() => {
     handleSearch(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, orders]);
 
-  // Fetch orders from backend
-  const fetchOrders = async () => {
-    try {
-      const response = await fetch("https://superior-workers-backend.onrender.com/customers/getOrders", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      });
-  
-      if (!response.ok) {
-        if (response.status === 401) {
-          setSessionExpired(true);
-          localStorage.removeItem("authToken");
-          navigate("/EmployeeLogin");
-        }
-        throw new Error("Failed to fetch orders");
-      }
-  
-      const data = await response.json();
-      console.log("Fetched Orders:", data); // Debugging fetched data
-  
-      if (data.success && Array.isArray(data.orders)) {
-        setOrders(data.orders); // Access the orders array inside the response
-        setFilteredOrders(data.orders); // Set filtered orders initially
-      } else {
-        console.error("Data format is incorrect");
-        toast.error("Failed to load orders. Invalid data format.");
-      }
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      toast.error("Failed to load orders. Please try again later.");
-    } finally {
-      setIsLoading(false);
+  const handleSearch = (searchValue) => {
+    if (!searchValue) {
+      setFilteredOrders(orders);
+      return;
     }
+
+    const filtered = orders.filter((order) =>
+      order.name?.toLowerCase().includes(searchValue.toLowerCase()) ||
+      order.phone?.includes(searchValue) ||
+      order.service?.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    setFilteredOrders(filtered);
   };
-  
 
   useEffect(() => {
-    if (!localStorage.getItem("authToken")) {
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
       setSessionExpired(true);
       navigate("/EmployeeLogin");
       return;
     }
-    fetchOrders();
-  }, [navigate]);
 
-  // Handle search logic
-  const handleSearch = (searchTerm) => {
-    console.log("Searching for:", searchTerm); // Debugging search term
-    const filtered = orders.filter(
-      (order) =>
-        order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.service.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredOrders(filtered);
-    console.log("Filtered Orders:", filtered); // Debugging filtered orders
-  };
+    getOrders(); // Zustand handles expired token check
+  }, [getOrders, navigate]);
 
   const handleAccept = (order) => {
     setSelectedOrder(order);
@@ -109,6 +83,7 @@ const EmployeeDashboard = () => {
     setFilteredOrders(filteredOrders.filter((o) => o.id !== order.id));
     console.log(`Declined order with ID: ${order.id}`);
   };
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -125,9 +100,13 @@ const EmployeeDashboard = () => {
             style={{ height: '60px', width: '90px' }}
           />
           <div className="hidden md:flex space-x-4">
-            <button className="text-foreground hover:text-primary flex items-center gap-2">
-              <FiHome /> Dashboard
-            </button>
+          <button
+  onClick={() => navigate("/EmployeeDashboard")}
+  className="text-foreground hover:text-primary flex items-center gap-2"
+>
+  <FiHome /> Dashboard
+</button>
+
             <button className="text-foreground hover:text-primary flex items-center gap-2">
               <FiClipboard /> Orders
             </button>
@@ -165,8 +144,6 @@ const EmployeeDashboard = () => {
             </div>
           </div>
         </nav>
-
-
 
 
       {sessionExpired && (
@@ -245,12 +222,12 @@ const EmployeeDashboard = () => {
         <h3 className="text-xl font-semibold mt-6">Order Location</h3>
         <iframe
           width="100%"
-          height="300px"
+          height="600px"
           frameBorder="0"
           style={{ border: 0 }}
           src={`https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
             selectedOrder.address
-          )}&key=YOUR_GOOGLE_MAPS_API_KEY`}
+          )}&key=AIzaSyAZHlSt4OzeZUsoEpIHKWRpxDxlmJz_BpI`}
           allowFullScreen
         ></iframe>
       </div>
@@ -261,15 +238,6 @@ const EmployeeDashboard = () => {
 };
 
 export default EmployeeDashboard;
-
-
-
-
-
-
-
-
-
 
 
 
