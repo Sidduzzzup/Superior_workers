@@ -245,7 +245,7 @@ const EmployeeDashboard = () => {
         <h3 className="text-xl font-semibold mt-6">Order Location</h3>
         <iframe
           width="100%"
-          height="600px"
+          height="500px"
           frameBorder="0"
           style={{ border: 0 }}
           src={`https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
