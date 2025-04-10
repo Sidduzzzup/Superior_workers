@@ -29,7 +29,7 @@ const PaymentGateway = () => {
     return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
   };
 
-  const validatePhone = (phone) => {
+  const validatePhone = (phone) => { 
     return phone.match(/^[0-9]{10}$/);
   };
 
