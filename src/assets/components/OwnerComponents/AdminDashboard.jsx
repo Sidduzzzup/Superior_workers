@@ -133,6 +133,15 @@ const AdminDashboard = () => {
     currentPage * itemsPerPage
   );
 
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    fetchOrderData();
+  }, [navigate]);
+
   return (
     <div className={`min-h-screen ${darkMode ? "dark bg-gray-900" : "bg-background"} overflow-x-hidden`}>
       {/* Sidebar */}
