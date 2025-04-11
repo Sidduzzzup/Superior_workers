@@ -209,7 +209,7 @@ const AdminDashboard = () => {
           </div>
           <div className="p-4 bg-card rounded-lg shadow-sm">
             <h3 className="text-lg font-semibold text-foreground">Total Orders</h3>
-            <p className="text-md font-bold text-primary">{overviewData.loginAnalytics}</p>
+            <p className="text-2xl font-bold text-primary">{overviewData.loginAnalytics}</p>
           </div>
         </div>
 
