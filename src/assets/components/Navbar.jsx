@@ -124,6 +124,9 @@ export default function Navbar() {
     { text: 'Add Tasks', path: '/TodoList' },
     { text: 'Your Task', path: '/' },
     { text: 'Employee', path: '/Yourtasks' },
+    { text: 'Japanese', path: '/HomePageJapan' },
+
+    
   ].map(({ text, path }) => (
     <MenuItem key={text} onClick={handleMenuClose}>
       <Link

@@ -39,7 +39,8 @@ import LogoutConfirmationEMP from './Employe_Component/LogoutConfirmationEmp.jsx
 import AddressComponent from './assets/components/AddressComponent.jsx';
 import PaymentGateway from './assets/components/PaymentGateway/PaymentGateway.jsx';
 import YourOrders from './assets/components/YourOrders.jsx';
-
+import HomepageJapan from './assets/components/HomePageJapan.jsx';
+import SecondJapan from './assets/components/SecondJapan.jsx';
 const AdminOnlyRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
   return !isAuthenticated || !user?.isAdmin ? <Navigate to="/" replace /> : children;
@@ -127,6 +128,8 @@ function AppContent() {
         <Route path="/PaymentGateway" element={<PaymentGateway />} />
         <Route path="/EmployeeDashboard" element={<EmployeeDashboard />} />
         <Route path="/YourOrders" element={<YourOrders />} />
+        <Route path="/HomePageJapan" element={<HomepageJapan />} />
+        <Route path="/SecondJapan" element={<SecondJapan />} />
       </Routes>
       <Toaster />
     </>

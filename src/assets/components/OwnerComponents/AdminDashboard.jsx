@@ -21,6 +21,7 @@ const AdminDashboard = () => {
   const itemsPerPage = 5;
   
   const [userCount, setUserCount] = useState(0);
+  const [orderCount, setOrderCount] = useState(0);
   const [users, setUsers] = useState([]);
 
 
@@ -43,6 +44,8 @@ const AdminDashboard = () => {
   
   useEffect(() => {
       fetchUserData();
+      fetchOrderData();
+
   }, []);
 
   const fetchUserData = async () => {
@@ -58,13 +61,37 @@ const AdminDashboard = () => {
       }
   };
 
+  const fetchOrderData = async () => {
+    try {
+        // Use the same base URL as fetchUserData for consistency
+        const response = await fetch("https://superior-workers-backend.onrender.com/customers/getOrderStats", {
+            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        if (data.success) {
+            setOrderCount(data.orderCount);
+        }
+    } catch (error) {
+        console.error("Error fetching Order data:", error);
+    }
+};
+
 
 
   const overviewData = {
     totalAccounts: userCount,
     activeUsers: userCount,
     newUsers: "Our Servers are down...Due to large-scale malicious attacks on SENTENTIAL's services",
-    loginAnalytics: "Our Servers are down... Due to large-scale malicious attacks on SENTENTIAL's services"
+    loginAnalytics: orderCount,
   };
 
   const userGrowthData = {
@@ -181,7 +208,7 @@ const AdminDashboard = () => {
             <p className="text-md font-bold text-primary">{overviewData.newUsers}</p>
           </div>
           <div className="p-4 bg-card rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold text-foreground">Login Analytics</h3>
+            <h3 className="text-lg font-semibold text-foreground">Total Orders</h3>
             <p className="text-md font-bold text-primary">{overviewData.loginAnalytics}</p>
           </div>
         </div>
@@ -226,12 +253,12 @@ const AdminDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((users) => (
-                  <tr key={users.id} className="border-b hover:bg-secondary">
-                    <td className="p-3 text-foreground">{users.name}</td>
-                    <td className="p-3 text-foreground">{users.phone}</td>
-                    <td className="p-3 text-foreground">{users.email}</td>
-                    <td className="p-3 text-foreground">{format(users.lastLogin, "MMM dd, yyyy")}</td>
+                {users.map((user) => (
+                  <tr key={user._id || user.id} className="border-b hover:bg-secondary">
+                    <td className="p-3 text-foreground">{user.name}</td>
+                    <td className="p-3 text-foreground">{user.phone}</td>
+                    <td className="p-3 text-foreground">{user.email}</td>
+                    <td className="p-3 text-foreground">{format(user.lastLogin, "MMM dd, yyyy")}</td>
                     <td className="p-3 text-foreground"> {"Can't Reveal for Security Reasons"} </td>
                   </tr>
                 ))}
