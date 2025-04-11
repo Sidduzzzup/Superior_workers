@@ -120,9 +120,9 @@ export default function Navbar() {
     { text: 'Log In', path: '/FirstLogin' },
     { text: 'Log Out', path: '/LogoutConfirmation' },
     { text: 'Payment', path: '/PaymentGateway' },
-    { text: 'Your Orders', path: '/' },
+    { text: 'YourOrders', path: '/YourOrders' },
     { text: 'Add Tasks', path: '/TodoList' },
-    { text: 'Your Task', path: '/Yourtasks' },
+    { text: 'Your Task', path: '/' },
     { text: 'Employee', path: '/Yourtasks' },
   ].map(({ text, path }) => (
     <MenuItem key={text} onClick={handleMenuClose}>
@@ -175,8 +175,8 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , fontFamily: 'Bebas Neue, sans-serif', fontSize: '23px'} }}>
             <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Home</Link>
             <Link to="/ProfileView" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Profile</Link>
-            <Link to="/Yourtasks" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Your Task</Link>
-            <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Your Orders</Link>
+            <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Your Task</Link>
+            <Link to="/YourOrders" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Your Orders</Link>
             <Link to="/" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Contact Us</Link>
             {/* <Link to="/FirstLogin" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Log In</Link>
             <Link to="/LogoutConfirmation" style={{ marginRight: 20, color: 'white', textDecoration: 'none' }}>Log Out</Link>     */}
@@ -233,8 +233,8 @@ export default function Navbar() {
   {[
     { text: "Home", path: "/" },
     { text: "Profile", path: "/ProfileView" },
-    { text: "Your Task", path: "/Yourtasks" },
-    { text: "Your Orders", path: "/" },
+    { text: "Your Task", path: "/" },
+    { text: "YourOrders", path: "/Your Orders" },
     { text: "Contact Us", path: "/" },
     { text: "Log In", path: "/FirstLogin" },
     { text: "Log Out", path: "/LogoutConfirmation" },

@@ -1,6 +1,3 @@
-
-
-
 import { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -24,6 +21,7 @@ import LogoutConfirmation from "./assets/components/Routing-Component/LogoutConf
 import ResetEmailSetup from "./assets/components/Routing-Component/PasswordRecoveryForm.jsx";
 import EmailConfirmationSuccess from "./assets/components/Routing-Component/EmailConfirmationSuccess.jsx";
 import TodoList from "./assets/components/Routing-Component/TodoList.jsx";
+import AdminSetup from "./assets/components/Routing-Component/AdminSetup.jsx";
 
 import AdminDashboard from './assets/components/OwnerComponents/AdminDashboard.jsx';
 import Yourtasks from './assets/components/Routing-Component/Yourtasks.jsx';
@@ -38,6 +36,7 @@ import EmployeeSignUp from './Employe_Component/EmployeeSignUp.jsx';
 import LogoutConfirmationEMP from './Employe_Component/LogoutConfirmationEmp.jsx';
 import AddressComponent from './assets/components/AddressComponent.jsx';
 import PaymentGateway from './assets/components/PaymentGateway/PaymentGateway.jsx';
+import YourOrders from './assets/components/YourOrders.jsx';
 
 const AdminOnlyRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -125,6 +124,8 @@ function AppContent() {
         <Route path="/AddressComponent" element={<AddressComponent />} />
         <Route path="/PaymentGateway" element={<PaymentGateway />} />
         <Route path="/EmployeeDashboard" element={<EmployeeDashboard />} />
+        <Route path="/YourOrders" element={<YourOrders />} />
+        <Route path="/admin-setup" element={<AdminSetup />} />
       </Routes>
       <Toaster />
     </>

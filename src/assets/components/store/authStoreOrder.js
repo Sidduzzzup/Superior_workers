@@ -27,41 +27,44 @@ export const useAuthStoreOrder = create((set) => ({
 
   // Fetch orders for a specific worker
   // Fetch orders for Rahul Sharma (default worker)
-getOrders: async () => {
-  set({ isLoading: true });
-  const token = localStorage.getItem("authToken");
-  console.log("Stored Token:", token); // Debugging
-  console.log("Fetching orders with token:", token);
-
-  if (!token || isTokenExpired(token)) { 
-    alert("Session expired. Please log in again.");
-    localStorage.removeItem("authToken");
-    window.location.href = "/EmployeeLogin"; // Redirect to login
-    return;
-}
-
-
-  try {
-    const response = await fetch(`${API_URL}/getOrders`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch orders");
+  getOrders: async () => {
+    set({ isLoading: true });
+    const token = localStorage.getItem("authToken");
+  
+    if (!token) {
+      console.warn("No token found");
+      set({ isLoading: false });
+      return;
     }
-
-    const data = await response.json();
-    set({ orders: data.orders || [], isLoading: false });
-  } catch (error) {
-    console.error("Error fetching orders:", error.message);
-    alert("Failed to fetch orders");
-    set({ orders: [], isLoading: false });
-  }
-},
+  
+    if (isTokenExpired(token)) {
+      console.warn("Token expired");
+      // Don't redirect from here — just return null
+      set({ isLoading: false });
+      return;
+    }
+  
+    try {
+      const response = await fetch(`${API_URL}/getOrders`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch orders");
+      }
+  
+      const data = await response.json();
+      set({ orders: data.orders || [], isLoading: false });
+    } catch (error) {
+      console.error("Error fetching orders:", error.message);
+      set({ orders: [], isLoading: false });
+    }
+  },
+  
 
 
   // Create a new order

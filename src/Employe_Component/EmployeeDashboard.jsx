@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FiClipboard, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { useNavigate, useLocation } from "react-router-dom";
+import { FiClipboard, FiCheckCircle, FiXCircle, FiBell, FiMap, FiUser, FiLogOut, FiHome } from "react-icons/fi";
 import { toast } from "react-hot-toast";
 import Navbar from "../assets/components/Navbar";
-import { FiBell, FiMap, FiUser, FiLogOut, FiHome} from "react-icons/fi";
+import { useAuthStoreOrder } from "../assets/components/store/authStoreOrder"; // Fixed hook name import
+import axios from "axios";
 
 const EmployeeDashboard = () => {
- 
   const navigate = useNavigate();
-  const [orders, setOrders] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [sessionExpired, setSessionExpired] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [orderStats, setOrderStats] = useState({
+    totalOrders: 0,
+    pendingOrders: 0,
+    completedOrders: 0
+  });
+
+  const { orders, isLoading, getOrders } = useAuthStoreOrder();
 
   // Debounced search hook
   const useDebouncedSearch = (value, delay) => {
@@ -33,71 +38,51 @@ const EmployeeDashboard = () => {
     return debouncedValue;
   };
 
+  const handleGoToDashboard = () => {
+    navigate("/EmployeeDashboard");
+  };
+
   const debouncedSearchTerm = useDebouncedSearch(searchTerm, 500);
 
   useEffect(() => {
     handleSearch(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, orders]);
 
-  // Fetch orders from backend
-  const fetchOrders = async () => {
-    try {
-      const response = await fetch("https://superior-workers-backend.onrender.com/customers/getOrders", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      });
-  
-      if (!response.ok) {
-        if (response.status === 401) {
-          setSessionExpired(true);
-          localStorage.removeItem("authToken");
-          navigate("/EmployeeLogin");
-        }
-        throw new Error("Failed to fetch orders");
-      }
-  
-      const data = await response.json();
-      console.log("Fetched Orders:", data); // Debugging fetched data
-  
-      if (data.success && Array.isArray(data.orders)) {
-        setOrders(data.orders); // Access the orders array inside the response
-        setFilteredOrders(data.orders); // Set filtered orders initially
-      } else {
-        console.error("Data format is incorrect");
-        toast.error("Failed to load orders. Invalid data format.");
-      }
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      toast.error("Failed to load orders. Please try again later.");
-    } finally {
-      setIsLoading(false);
+  const handleSearch = (searchValue) => {
+    if (!searchValue) {
+      setFilteredOrders(orders);
+      return;
     }
+
+    const filtered = orders.filter((order) =>
+      order.name?.toLowerCase().includes(searchValue.toLowerCase()) ||
+      order.phone?.includes(searchValue) ||
+      order.service?.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    setFilteredOrders(filtered);
   };
-  
 
   useEffect(() => {
-    if (!localStorage.getItem("authToken")) {
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
       setSessionExpired(true);
       navigate("/EmployeeLogin");
       return;
     }
-    fetchOrders();
-  }, [navigate]);
 
-  // Handle search logic
-  const handleSearch = (searchTerm) => {
-    console.log("Searching for:", searchTerm); // Debugging search term
-    const filtered = orders.filter(
-      (order) =>
-        order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.service.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredOrders(filtered);
-    console.log("Filtered Orders:", filtered); // Debugging filtered orders
-  };
+    getOrders(); // Zustand handles expired token check
+  }, [getOrders, navigate]);
+
+  useEffect(() => {
+    console.log('Current orders:', orders); // Debug log
+    // Update order stats whenever orders change
+    setOrderStats(prevStats => ({
+      ...prevStats,
+      totalOrders: orders?.length || 0
+    }));
+  }, [orders]);
 
   const handleAccept = (order) => {
     setSelectedOrder(order);
@@ -112,62 +97,67 @@ const EmployeeDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-       <Navbar />;
-
+      <Navbar />
       
-       { /* Navbar */}
-        <nav className="sticky top-0 z-50 bg-card shadow-sm p-4">
-          <div className="container mx-auto flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-                   <img
-            src="/istockphoto-168362728-612x612.png"
-            alt="Company Logo"
-            style={{ height: '60px', width: '90px' }}
-          />
-          <div className="hidden md:flex space-x-4">
-            <button className="text-foreground hover:text-primary flex items-center gap-2">
-              <FiHome /> Dashboard
-            </button>
-            <button className="text-foreground hover:text-primary flex items-center gap-2">
-              <FiClipboard /> Orders
-            </button>
+      <div className="mt-8 bg-white p-4 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-2">Total Orders</h3>
+        <p className="text-3xl font-bold">{orderStats.totalOrders}</p>
+      </div>
+
+      {/* Navbar */}
+      <nav className="sticky top-0 z-50 bg-card shadow-sm p-4">
+        <div className="container mx-auto flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+                 <img
+          src="/istockphoto-168362728-612x612.png"
+          alt="Company Logo"
+          style={{ height: '60px', width: '90px' }}
+        />
+        <div className="hidden md:flex space-x-4">
+        <button
+onClick={() => navigate("/EmployeeDashboard")}
+className="text-foreground hover:text-primary flex items-center gap-2"
+>
+  <FiHome /> Dashboard
+</button>
+
+        <button className="text-foreground hover:text-primary flex items-center gap-2">
+          <FiClipboard /> Orders
+        </button>
+        </div>
           </div>
+          <div className="flex items-center space-x-4">
+        <div className="relative">
+          <FiBell className="text-2xl text-accent cursor-pointer" />
+          <span className="absolute -top-1 -right-1 bg-destructive text-white rounded-full w-4 h-4 text-xs flex items-center justify-center">
+            3
+          </span>
+        </div>
+        <div className="relative">
+          <button
+            onClick={() => setShowDropdown(!showDropdown)}
+            className="flex items-center space-x-2"
+          >
+            <img
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cHJvZmlsZXx8fHx8fDE3MDg2NzQwMzE&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=100"
+          alt="Profile"
+          className="h-10 w-10 rounded-full"
+            />
+          </button>
+          {showDropdown && (
+            <div className="absolute right-0 mt-2 w-48 bg-card rounded-md shadow-lg py-1">
+          <button className="block px-4 py-2 text-sm text-foreground hover:bg-muted w-full text-left">
+            <FiUser className="inline mr-2" /> View Profile
+          </button>
+          <button onClick={() => navigate('/LogoutConfirmationEMP')} className="block px-4 py-2 text-sm text-foreground hover:bg-muted w-full text-left">
+            <FiLogOut className="inline mr-2" /> Logout
+          </button>
             </div>
-            <div className="flex items-center space-x-4">
-          <div className="relative">
-            <FiBell className="text-2xl text-accent cursor-pointer" />
-            <span className="absolute -top-1 -right-1 bg-destructive text-white rounded-full w-4 h-4 text-xs flex items-center justify-center">
-              3
-            </span>
+          )}
+        </div>
           </div>
-          <div className="relative">
-            <button
-              onClick={() => setShowDropdown(!showDropdown)}
-              className="flex items-center space-x-2"
-            >
-              <img
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cHJvZmlsZXx8fHx8fDE3MDg2NzQwMzE&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=100"
-            alt="Profile"
-            className="h-10 w-10 rounded-full"
-              />
-            </button>
-            {showDropdown && (
-              <div className="absolute right-0 mt-2 w-48 bg-card rounded-md shadow-lg py-1">
-            <button className="block px-4 py-2 text-sm text-foreground hover:bg-muted w-full text-left">
-              <FiUser className="inline mr-2" /> View Profile
-            </button>
-            <button onClick={() => navigate('/LogoutConfirmationEMP')} className="block px-4 py-2 text-sm text-foreground hover:bg-muted w-full text-left">
-              <FiLogOut className="inline mr-2" /> Logout
-            </button>
-              </div>
-            )}
-          </div>
-            </div>
-          </div>
-        </nav>
-
-
-
+        </div>
+      </nav>
 
       {sessionExpired && (
         <div className="bg-destructive text-white text-center p-4">
@@ -245,7 +235,7 @@ const EmployeeDashboard = () => {
         <h3 className="text-xl font-semibold mt-6">Order Location</h3>
         <iframe
           width="100%"
-          height="500px"
+          height="600px"
           frameBorder="0"
           style={{ border: 0 }}
           src={`https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
@@ -261,15 +251,6 @@ const EmployeeDashboard = () => {
 };
 
 export default EmployeeDashboard;
-
-
-
-
-
-
-
-
-
 
 
 

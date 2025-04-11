@@ -87,27 +87,42 @@ const ProfileView = ({ address, onSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting form data:", formData);
-
+  
     try {
+      localStorage.setItem("userId", user._id); // <-- ADD THIS LINE
+      const userId = localStorage.getItem("userId"); // Retrieve the user ID from localStorage
+      console.log("User ID from localStorage:", userId); // Debugging line
+      
+  
+      if (!userId) {
+        setError("User ID not found. Please log in again.");
+        return;
+      }
+  
+      const payload = {
+        userId: userId,
+        address: formData,
+      };
+  
       const response = await fetch("https://superior-workers-backend.onrender.com/customers/update-address", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
+          Accept: "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
-
+  
       console.log("Raw Response:", response);
-
+  
       if (!response.ok) {
         const errorData = await response.text();
         throw new Error(`Failed to update address: ${errorData}`);
       }
-
+  
       const result = await response.json();
       console.log("Address updated successfully:", result);
-
+  
       if (onSave) {
         onSave(formData);
       }
@@ -116,6 +131,7 @@ const ProfileView = ({ address, onSave }) => {
       setError("Failed to update address. Please try again later.");
     }
   };
+  
 
 
   // Fetch address data from the backend

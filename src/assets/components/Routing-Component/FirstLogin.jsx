@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
@@ -22,8 +20,16 @@ export default function FirstLogin() {
   const handleSignIn = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setErrorMessage("Email and Password are required");
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      setErrorMessage("Please enter a valid email address");
+      return;
+    }
+
+    // Validate password
+    if (!password || password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long");
       return;
     }
 
@@ -32,12 +38,16 @@ export default function FirstLogin() {
     setSuccessMessage("");
 
     try {
-      const response = await login(email, password);
+      console.log("Attempting login with email:", email);
+      await login(email, password);
       
       setSuccessMessage("Login successful! Redirecting...");
       setTimeout(() => navigate("/"), 2000); // Shorter delay for better UX
     } catch (error) {
-      setErrorMessage(error);
+      // Extract the error message from the error object
+      const errorMsg = error.message || "An error occurred during login";
+      console.error("Login error:", errorMsg);
+      setErrorMessage(errorMsg);
     } finally {
       setIsLoading(false);
     }

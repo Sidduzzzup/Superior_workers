@@ -1,5 +1,3 @@
-
-
 import { create } from "zustand";
 import axios from "axios";
 
@@ -59,6 +57,7 @@ export const useAuthStore = create((set) => ({
         set({ isLoading: true, error: null });
     
         try {
+            console.log("🔹 Sending login request with:", { email, password: "***" }); // Log request data (hide password)
             const response = await axios.post(`${API_URL}/login`, { email, password });
     
             console.log("🔹 Server Response:", response.data); // Debugging
@@ -84,8 +83,26 @@ export const useAuthStore = create((set) => ({
             window.location.href = user.isAdmin ? "/AdminDashboard" : "/";
         } catch (error) {
             console.error("🔴 Login error:", error);
-            set({ error: error.response?.data?.message || "Error logging in", isLoading: false });
-            throw error;
+            // Extract more detailed error information
+            let errorMessage = "Error logging in";
+            
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.error("🔴 Error response data:", error.response.data);
+                errorMessage = error.response.data.message || error.response.data.error || errorMessage;
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error("🔴 No response received:", error.request);
+                errorMessage = "No response from server. Please check your connection.";
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error("🔴 Request setup error:", error.message);
+                errorMessage = error.message;
+            }
+            
+            set({ error: errorMessage, isLoading: false });
+            throw new Error(errorMessage);
         }
     },
     

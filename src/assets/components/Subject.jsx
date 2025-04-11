@@ -47,6 +47,20 @@ const Subject = () => {
           color: "#b93838",
           delay: 0.8,
         },
+        {
+          id: 6,
+          name: "Care",
+          icon: <FaBook />,
+          color: "#986d1d",
+          delay: 0.7,
+        },
+        {
+          id: 7,
+          name: "New design",
+          icon: <FaBook />,
+          color: "#0063ff",
+          delay: 0.8,
+        },
       
       ];
       

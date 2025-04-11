@@ -9,6 +9,7 @@ import LogoutConfirmation from "../Routing-Component/LogoutConfirmation";
 import FirstLogin from "../Routing-Component/FirstLogin";
 import { useNavigate } from "react-router-dom";
 import CEOPortal from "./CEOPortal";
+import axios from "axios";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement, BarElement);
 
@@ -22,7 +23,7 @@ const AdminDashboard = () => {
   
   const [userCount, setUserCount] = useState(0);
   const [users, setUsers] = useState([]);
-
+  const [orderCount, setOrderCount] = useState(0);
 
   const navigate = useNavigate();
 
@@ -43,6 +44,7 @@ const AdminDashboard = () => {
   
   useEffect(() => {
       fetchUserData();
+      fetchOrderData();
   }, []);
 
   const fetchUserData = async () => {
@@ -58,13 +60,29 @@ const AdminDashboard = () => {
       }
   };
 
+  const fetchOrderData = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await axios.get('https://superior-workers-backend.onrender.com/customers/getOrderStats', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
 
+      if (response.data.success) {
+        setOrderCount(response.data.orderCount);
+      }
+    } catch (error) {
+      console.error('Error fetching Order data:', error);
+      setOrderCount(0);
+    }
+  };
 
   const overviewData = {
     totalAccounts: userCount,
     activeUsers: userCount,
     newUsers: "Our Servers are down...Due to large-scale malicious attacks on SENTENTIAL's services",
-    loginAnalytics: "Our Servers are down... Due to large-scale malicious attacks on SENTENTIAL's services"
+    loginAnalytics: orderCount,
   };
 
   const userGrowthData = {
@@ -181,7 +199,7 @@ const AdminDashboard = () => {
             <p className="text-md font-bold text-primary">{overviewData.newUsers}</p>
           </div>
           <div className="p-4 bg-card rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold text-foreground">Login Analytics</h3>
+            <h3 className="text-lg font-semibold text-foreground">Total Orders</h3>
             <p className="text-md font-bold text-primary">{overviewData.loginAnalytics}</p>
           </div>
         </div>
@@ -226,12 +244,12 @@ const AdminDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((users) => (
-                  <tr key={users.id} className="border-b hover:bg-secondary">
-                    <td className="p-3 text-foreground">{users.name}</td>
-                    <td className="p-3 text-foreground">{users.phone}</td>
-                    <td className="p-3 text-foreground">{users.email}</td>
-                    <td className="p-3 text-foreground">{format(users.lastLogin, "MMM dd, yyyy")}</td>
+                {users.map((user) => (
+                  <tr key={user._id || user.id} className="border-b hover:bg-secondary">
+                    <td className="p-3 text-foreground">{user.name}</td>
+                    <td className="p-3 text-foreground">{user.phone}</td>
+                    <td className="p-3 text-foreground">{user.email}</td>
+                    <td className="p-3 text-foreground">{format(user.lastLogin, "MMM dd, yyyy")}</td>
                     <td className="p-3 text-foreground"> {"Can't Reveal for Security Reasons"} </td>
                   </tr>
                 ))}
