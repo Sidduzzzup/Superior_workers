@@ -4,19 +4,19 @@ import Order from "../models/orderSchema.js"; // Import the Order model
 // Create an Order
 export const createOrder = async (req, res) => {
   const { name, phone, service, address, timeAvailability } = req.body;
-  const userId = req.user.userId; // Use userId from token payload
+  const userId = req.user.userId; 
 
   if (!userId || !service || !address) {
     return res.status(400).json({ success: false, error: "Required fields are missing" });
   }
 
   try {
-    // Automatically assign all orders to Rahul Sharma
+    
     const defaultWorkerId = "67c48d36ee733bbb31f06773";
 
     const newOrder = new Order({
-      userId, // Authenticated userId
-      workerId: defaultWorkerId, // Predefined worker
+      userId, 
+      workerId: defaultWorkerId, 
       name,
       phone,
       service,
@@ -32,15 +32,13 @@ export const createOrder = async (req, res) => {
     res.status(500).json({ success: false, error: "Internal Server Error: " + error.message });
   }
 };
-// Get All Orders
-// Get Orders for a specific worker
-// Get Orders for Rahul Sharma
+
 
 
 export const getOrders = async (req, res) => {
-  const token = req.headers.authorization; // Get token from request headers
+  const token = req.headers.authorization; 
   console.log("JWT Token:", token);
-  const defaultWorkerId = "67c48d36ee733bbb31f06773"; // Rahul Sharma's ID
+  const defaultWorkerId = "67c48d36ee733bbb31f06773"; 
   if (!token) {
     return res.status(401).json({ success: false, error: "Token not found. Please log in." });
   }
@@ -60,3 +58,17 @@ export const getOrders = async (req, res) => {
 };
 
 // Get Orders for a specific user
+export const getOrderStats = async (req, res) => {
+  try {
+    // Get total number of orders
+    const orderCount = await Order.countDocuments();
+
+    // Optionally, get some order details if needed (like recent orders)
+    const recentOrders = await Order.find({}, "name service status").limit(10); // Optional
+
+    res.status(200).json({ success: true, orderCount, orders: recentOrders });
+  } catch (error) {
+    console.error("Error fetching order data:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};

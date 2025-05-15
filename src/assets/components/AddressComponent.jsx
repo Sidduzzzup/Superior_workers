@@ -50,6 +50,7 @@ const AddressCard = () => {
 
       <img src="/WhatsApp Image 2025-03-06 at 02.23.44_90fc38f3.jpg" alt="Nature" className="rounded-lg mt-5 h-[500px]" />
       <img src="/download-krr.png" alt="Nature" className="rounded-lg mt-5 h-[200px]" />
+      <img src="/rishik_love.jpg" alt="Nature" className="rounded-lg mt-5 h-[500px] w-[400px]" />
     </div>
   );
 };
