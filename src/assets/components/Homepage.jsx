@@ -57,7 +57,7 @@ const Homepage = () => {
        initial={{ opacity: 0, x: -200 }}
        animate={{ opacity: 1, x: 0 }}
        transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
-       className='font-archivo text-lg text-gray-500 p-4 pt-5 sm:text-sm md:text-base'>
+       className='font-archivo text-lg text-gray-500 p-4 pt-5 sm:text-xs md:text-lg'>
         
       Welcome to the ultimate solution for all your home repair needs. Whether it's an electrician, plumber, 
       carpenter, builder, or any other professional, we've got you covered. With just one click, book trusted and skilled workers
@@ -66,7 +66,7 @@ const Homepage = () => {
       </div>
 
 
-      <div className="flex space-x-6 pl-4 pt-12 font-mono mb-5 justify-center md:justify-start">
+      <div className="flex space-x-6 pl-4 pt-7 font-mono mb-5 justify-center md:justify-start">
       
       {/* Book a Worker Button */}
       <motion.button

@@ -45,7 +45,7 @@ const Second = () => {
 
 
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-3 md:gap-4 font-sans p-10 sm:p-10 md:p-10">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-96 gap-10 sm:gap-3 md:gap-4 font-sans p-10 sm:p-10 md:p-10">
   {
     details.map((item) => (
         <motion.div

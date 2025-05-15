@@ -242,6 +242,7 @@ export default function Navbar() {
     { text: "Log In", path: "/FirstLogin" },
     { text: "Log Out", path: "/LogoutConfirmation" },
     { text: "Employee", path: "/EmployeeLogin" },
+    { text: 'Japanese', path: '/HomePageJapan' },
   ].map(({ text, path }) => (
     <ListItem key={text} disablePadding>
       <ListItemButton onClick={() => setMobileMenuOpen(false)}>
