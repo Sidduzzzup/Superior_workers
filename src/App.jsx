@@ -38,6 +38,7 @@ import AddressComponent from './assets/components/AddressComponent.jsx';
 import PaymentGateway from './assets/components/PaymentGateway/PaymentGateway.jsx';
 import YourOrders from './assets/components/YourOrders.jsx';
 import ContactUs from './assets/components/ContactUs.jsx';
+import HomePageJapan from './assets/components/HomePageJapan.jsx';
 
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
@@ -130,6 +131,7 @@ function AppContent() {
         <Route path="/YourOrders" element={<YourOrders />} />
         <Route path="/admin-setup" element={<AdminSetup />} />
         <Route path="/ContactUs" element={<ContactUs />} />
+        <Route path="/HomePageJapan" element={<HomePageJapan />} />
       </Routes>
       <Toaster />
        <SpeedInsights />

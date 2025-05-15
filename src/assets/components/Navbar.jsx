@@ -123,7 +123,7 @@ export default function Navbar() {
     { text: 'YourOrders', path: '/YourOrders' },
     { text: 'Add Tasks', path: '/TodoList' },
     { text: 'Your Task', path: '/' },
-    { text: 'Employee', path: '/Yourtasks' },
+    { text: 'Employee', path: '/EmployeeLogin' },
     { text: 'Japanese', path: '/HomePageJapan' },
 
     
