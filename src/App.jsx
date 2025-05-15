@@ -39,6 +39,8 @@ import PaymentGateway from './assets/components/PaymentGateway/PaymentGateway.js
 import YourOrders from './assets/components/YourOrders.jsx';
 import ContactUs from './assets/components/ContactUs.jsx';
 
+import { SpeedInsights } from '@vercel/speed-insights/react';
+
 const AdminOnlyRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
   return !isAuthenticated || !user?.isAdmin ? <Navigate to="/" replace /> : children;
@@ -130,6 +132,7 @@ function AppContent() {
         <Route path="/ContactUs" element={<ContactUs />} />
       </Routes>
       <Toaster />
+       <SpeedInsights />
     </>
   );
 }

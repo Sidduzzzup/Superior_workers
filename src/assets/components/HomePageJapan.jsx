@@ -7,13 +7,14 @@ import Footersection from './Footersection.jsx';
 import Counter from './Counter.jsx';
 import Subject from './Subject.jsx';
 import LiveProofSection from './LiveProofSection.jsx';
+import SecondJapan from './SecondJapan.jsx';
 
 
-const Homepage = () => {
+const HomepageJapan = () => {
   return (<>
        
       
-    <div className='container grid grid-cols-1 md:grid-cols-2 gap-10 home-height w-screen h-[580px]'>
+    <div className='container grid grid-cols-1 md:grid-cols-2 home-height w-screen'>
 
     
     <div className='md:hidden size-auto justify-center items-center  mt-24' >
@@ -39,8 +40,8 @@ const Homepage = () => {
        initial={{ opacity: 0, x: -200 }}
        animate={{ opacity: 1, x: 0 }}
        transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
-       className='text-yellow-500  font-bold font-archivo pl-3 text-sm sm:text-xl md:text-xl lg:text-2xl '>
-         100% SATISFACTION GUARANTEE 
+       className='text-yellow-500  font-medium font-archivo pl-3 text-sm sm:text-xl md:text-xl lg:text-xl '>
+         100%満足保証
       </motion.h1>
 
       
@@ -48,8 +49,8 @@ const Homepage = () => {
        initial={{ opacity: 0, x: -200 }}
        animate={{ opacity: 1, x: 0 }}
        transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
-       className=' text-sky-500 font-special  pl-3 pt-4 text-2xl sm:text-2xl md:text-3xl lg:text-5xl '>
-         Get Repair in One Click
+       className=' text-sky-500  font-special pl-3 pt-4 text-2xl sm:text-2xl md:text-3xl lg:text-5xl '>
+         ワンクリックで修理を依頼
       </motion.h1>
 
       <div>
@@ -57,11 +58,10 @@ const Homepage = () => {
        initial={{ opacity: 0, x: -200 }}
        animate={{ opacity: 1, x: 0 }}
        transition={{ type: "spring", stiffness: 50, delay: 0.2 }}
-       className='font-archivo text-lg text-gray-500 p-4 pt-5 sm:text-sm md:text-base'>
+       className='font-helvetica text-lg text-gray-500 p-4 pt-5 sm:text-sm md:text-lg'>
         
-      Welcome to the ultimate solution for all your home repair needs. Whether it's an electrician, plumber, 
-      carpenter, builder, or any other professional, we've got you covered. With just one click, book trusted and skilled workers
-       to handle any repair or maintenance task at your convenience. Your home repairs made easy, fast, and reliable!
+        あらゆる住宅修理のニーズに応える究極のソリューションへようこそ。電気技師、配管工、大工、建築業者など、どんな専門家でも、私たちが対応いたします。クリックひとつで、信頼できる熟練の作業員をご予約いただけます。
+        ご都合に合わせて、あらゆる修理やメンテナンス作業を承ります。住宅修理を簡単、迅速、そして確実に！
       </motion.p>
       </div>
 
@@ -78,12 +78,11 @@ const Homepage = () => {
                    shadow-lg transition-all duration-300 ease-in-out hover:bg-yellow-500 hover:border-yellow-500 
                    hover:shadow-[8px_10px_15px_rgba(0,0,0,0.3)] scale-100 hover:scale-110" >
                      
-       Book a Worker
+                     作業員を予約する
       </motion.button>
 
       {/* Call Us Button */}
       <motion.button
-      onClick={()=>window.location.href='/ContactUs'}
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ type: "spring", stiffness: 70, delay: 0.2 }}
@@ -91,7 +90,7 @@ const Homepage = () => {
                    shadow-lg transition-all duration-300 ease-in-out hover:bg-sky-500 hover:text-white 
                    hover:shadow-[8px_10px_15px_rgba(0,0,0,0.3)] scale-100 hover:scale-110"
       >
-        Contact Us
+        お電話ください
       </motion.button>
 
     </div>
@@ -117,8 +116,8 @@ const Homepage = () => {
     
        
     </div>
-    
-    <Second/>
+    <SecondJapan/>
+
     <LiveProofSection/>
     <Counter/>
     <Works/>
@@ -132,5 +131,5 @@ const Homepage = () => {
   )
 }
 
-export default Homepage
+export default HomepageJapan
 

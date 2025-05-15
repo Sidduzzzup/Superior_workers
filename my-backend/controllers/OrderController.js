@@ -57,6 +57,24 @@ export const getOrders = async (req, res) => {
   }
 };
 
+
+
+export const getOrderStats = async (req, res) => {
+  try {
+    // Get total number of orders
+    const orderCount = await Order.countDocuments();
+
+    // Optionally, get some order details if needed (like recent orders)
+    const recentOrders = await Order.find({}, "name service status").limit(10); // Optional
+
+    res.status(200).json({ success: true, orderCount, orders: recentOrders });
+  } catch (error) {
+    console.error("Error fetching order data:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+
 // Get Orders for a specific user
 export const getOrderStats = async (req, res) => {
   try {

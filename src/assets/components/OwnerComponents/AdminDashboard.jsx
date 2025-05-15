@@ -22,8 +22,8 @@ const AdminDashboard = () => {
   const itemsPerPage = 5;
   
   const [userCount, setUserCount] = useState(0);
-  const [users, setUsers] = useState([]);
   const [orderCount, setOrderCount] = useState(0);
+  const [users, setUsers] = useState([]);
 
   const navigate = useNavigate();
 
